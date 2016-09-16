@@ -20,7 +20,7 @@
     "no-underscore-dangle": 0,
     "no-loop-func": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": 0
-    "prefer-template" : 0,
+    "import/no-unresolved": 0,
+    "prefer-template" : 0
   }
 }

@@ -2,7 +2,7 @@
   border: 1px solid black;
   max-width: 1000px;
   margin: auto;
-  height: 95vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
