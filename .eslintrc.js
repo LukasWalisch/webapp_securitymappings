@@ -4,7 +4,7 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module'
   },
-  extends: "airbnb/base",
+  extends: "airbnb",
   env: {
     'browser': true
   },

@@ -1,0 +1,50 @@
+#container {
+  border: 1px solid black;
+  max-width: 1000px;
+  margin: auto;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#header, #footer {
+  background-color: lightgray;
+  border: 1px solid black;
+  text-align: center;
+  padding: 1em;
+}
+
+#body-container {
+  display: flex;
+  justify-content: center;
+  flex: 1 100%;
+}
+
+#mappings-container {
+  text-align: center;
+  flex-grow: 10;
+  height: inherit;
+  border: 1px solid black;
+  background-color: coral;
+}
+
+#tactics-container, #patterns-container {
+  flex-grow: 1;
+  text-align: center;
+  border: 1px solid black;
+  background-color: coral;
+  padding: 2em;
+  align-content: center;
+}
+
+#tactic-list-container {
+  border: 1px solid black;
+  min-heigth: 12em;
+  overflow: auto;
+}
+
+#visual-container {
+  border: 1px solid red;
+  width: 100%;
+  height: 400px;
+}
