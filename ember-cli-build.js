@@ -22,6 +22,7 @@ module.exports = function(defaults) {
 
   app.import('bower_components/vis/dist/vis.js');
   app.import('bower_components/vis/dist/vis.css');
+  app.import('bower_components/lodash/dist/lodash.js');
 
   return app.toTree();
 };

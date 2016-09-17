@@ -4,8 +4,8 @@ export default DS.Model.extend({
 
   name: DS.attr('string'),
   info: DS.attr('string'),
-  parentTacticId: DS.belongsTo('tactic', { async: true, inverse: 'parentTacticId' }),
-  childTacticIds: DS.hasMany('tactic', { async: true, inverse: 'childTacticIds' }),
+  parentTacticId: DS.belongsTo('tactic', { async: true, inverse: null }),
+  childTacticIds: DS.hasMany('tactic', { async: true, inverse: null }),
   mappingIds: DS.hasMany('mapping', { async: true }),
 
 });
