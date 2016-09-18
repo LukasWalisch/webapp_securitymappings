@@ -3,7 +3,6 @@ body {
 }
 
 #container {
-  border: 1px solid black;
   max-width: 1000px;
   margin: auto;
   height: 99.8vh;
@@ -12,9 +11,11 @@ body {
 }
 
 #header, #footer {
-  background-color: lightgray;
-  border: 1px solid black;
   text-align: center;
+}
+
+#footer {
+  background-color: lightgray;
   padding: 1em;
 }
 
@@ -25,19 +26,56 @@ body {
   flex: 1 100%;
 }
 
+.mappings-content {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 
+              0 1px 5px 0 rgba(0, 0, 0, 0.12), 
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  border: 1px solid #E5E5E5;
+  border-radius: 2px;
+}
+
 .visualization {
   /*width: 100%;*/
+  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
   display: flex;
   flex-direction: row;
 }
 
-.pattern-info,
 .visualization #mapping {
+  width: 43%;
+  border-left: 1px solid #E5E5E5;
+}
+
+#pattern-info {
+  border-top: 1px solid #E5E5E5;
+}
+#pattern-info,
+.visualization #mapping {
+  visibility: hidden;
   padding: 10px;
 }
 
 #visual-container {
-  border: 1px solid red;
   width: 100%;
   height: 400px;
+}
+
+.navbar-inverse {
+  background-color: #0097A7;
+  border-color: #0097A7;
+  border-radius: 0px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a{
+  color: #FFFFFF;
+}
+
+button.navbar-toggle.collapsed {
+  padding: 0px;
+}
+
+ul.nav.navbar-nav {
+  float: right;
 }

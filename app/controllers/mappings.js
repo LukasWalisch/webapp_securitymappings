@@ -114,11 +114,11 @@ export default Ember.Controller.extend({
       }
       this.set('nodeInfo', node.toJSON().info);
       this.set('currentMappings', node.get('mappingIds'));
-      this.set('hasMapping', true);
+      this.showContent();
+
     } else {
       this.set('nodeInfo', null);
       this.set('currentMappings', null);
-      this.set('hasMapping', false);
     }
   },
 
@@ -134,6 +134,11 @@ export default Ember.Controller.extend({
       helper.id = entry.id;
       return helper;
     });
+  },
+
+  showContent() {
+    document.getElementById('mapping').setAttribute('style', 'visibility:visible;');
+    document.getElementById('pattern-info').setAttribute('style', 'visibility:visible;');
   },
 
 });
