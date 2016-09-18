@@ -27,13 +27,22 @@ const dataConverter = {
     const nodes = [];
     const edges = [];
     for (let tactic of tactics) {
-      nodes.push({ id: tactic.id, label: tactic.name, color: 'green' });
+      nodes.push({
+        id: tactic.id,
+        label: tactic.name,
+        color: 'green',
+        title: tactic.name,
+      });
       for (let childTacticId of tactic.childTacticIds) {
         edges.push({ from: tactic.id, to: childTacticId });
       }
     }
     for (let pattern of patterns) {
-      nodes.push({ id: pattern.id, label: pattern.name, color: 'red' });
+      nodes.push({ id: pattern.id,
+        label: pattern.name,
+        color: 'red',
+        title: pattern.name,
+      });
     }
     for (let mapping of mappings) {
       edges.push({ from: mapping.tacticId, to: mapping.patternId });

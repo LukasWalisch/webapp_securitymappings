@@ -26,7 +26,6 @@ export default Ember.Controller.extend({
    */
   init() {
     this._super();
-
     Ember.run.schedule('afterRender', this, function afterRender() {
       // fetch data from db
       const promiseArray = [];
@@ -36,7 +35,7 @@ export default Ember.Controller.extend({
 
       Ember.RSVP.all(promiseArray).then(() => {
 
-        // when db fetches finished, render Network
+        // when db fetches finished, render Network and enable tooltips
         this.renderNetwork();
       });
     });
@@ -78,8 +77,11 @@ export default Ember.Controller.extend({
 
     const container = document.getElementById('visual-container');
     const network = new vis.Network(container, dynamicData, options);
+    this.set('initialScale', network.getScale);
 
     network.on('click', (event) => {
+
+      this.toggleTooltip(network);
 
       // displays the info of the current selection in the info section
       this.displayNodeData(event);
@@ -91,6 +93,8 @@ export default Ember.Controller.extend({
           offset: { x: 0, y: 0 },
           animation: true,
         });
+      } else {
+        network.fit({ animation: true });
       }
 
     });
@@ -122,6 +126,16 @@ export default Ember.Controller.extend({
     }
   },
 
+  toggleTooltip(network) {
+    window.setTimeout(() => {
+      if (network.getScale() === 1) {
+        this.disableTooltip();
+      } else {
+        this.enableTooltip();
+      }
+    }, 2000);
+  },
+
 
   /**
    * converts Array from Ember Store to Array
@@ -134,6 +148,25 @@ export default Ember.Controller.extend({
       helper.id = entry.id;
       return helper;
     });
+  },
+
+  /**
+    * remove "display: none" to the tooltip css class
+    * @return {void}
+    */
+  enableTooltip() {
+
+    document.getElementsByClassName('vis-network-tooltip')[0].className = 'vis-network-tooltip';
+
+  },
+
+  /**
+   * set "display: none" to the tooltip css class
+   * @return {void}
+   */
+  disableTooltip() {
+
+    document.getElementsByClassName('vis-network-tooltip')[0].className += ' hide';
   },
 
   showContent() {

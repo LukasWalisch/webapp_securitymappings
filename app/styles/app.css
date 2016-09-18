@@ -79,3 +79,6 @@ button.navbar-toggle.collapsed {
 ul.nav.navbar-nav {
   float: right;
 }
+div.vis-network-tooltip.hide {
+  visibility: hidden;
+}
