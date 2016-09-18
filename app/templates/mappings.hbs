@@ -1,1 +1,7 @@
 <div id="visual-container"></div>
+<div>{{nodeInfo}}</div>
+<div>
+  {{#each currentMappings as |mapping|}}
+    <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+  {{/each}}
+</div>
