@@ -1,7 +1,21 @@
-<div id="visual-container"></div>
+{{!-- <div id="visual-container"></div>
 <div>{{nodeInfo}}</div>
 <div>
   {{#each currentMappings as |mapping|}}
     <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
   {{/each}}
+</div> --}}
+
+<div class="visualization">
+  <div id="visual-container"></div>
+  {{#if hasMapping}}
+    <div id="mapping">
+      Mappings:
+      {{#each currentMappings as |mapping|}}
+        <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>
+
+<div class="pattern-info">{{nodeInfo}}</div>

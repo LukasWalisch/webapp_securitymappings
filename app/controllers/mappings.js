@@ -13,8 +13,9 @@ export default Ember.Controller.extend({
   properties
    */
 
-  nodeInfo: '-',
-  currentMappings: [],
+  nodeInfo: null,
+  currentMappings: null,
+  hasMapping: false,
 
   /*
   methods
@@ -101,7 +102,6 @@ export default Ember.Controller.extend({
    * @param  {vis event} event
    */
   displayNodeData(event) {
-
     if (event.nodes.length > 0) {
       const nodeId = event.nodes[0];
       let node = this.store.peekRecord('tactic', nodeId);
@@ -114,9 +114,11 @@ export default Ember.Controller.extend({
       }
       this.set('nodeInfo', node.toJSON().info);
       this.set('currentMappings', node.get('mappingIds'));
+      this.set('hasMapping', true);
     } else {
-      this.set('nodeInfo', '-');
-      this.set('currentMappings', []);
+      this.set('nodeInfo', null);
+      this.set('currentMappings', null);
+      this.set('hasMapping', false);
     }
   },
 
