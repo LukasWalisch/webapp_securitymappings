@@ -68,7 +68,7 @@ body {
 }
 
 .loginRegister{ 
-  margin: 2.5em 5em 2.5em 0em; 
+  margin: auto; 
 } 
  
 .navbar-inverse .navbar-brand, 
@@ -85,4 +85,10 @@ ul.nav.navbar-nav {
 } 
 div.vis-network-tooltip.hide { 
   visibility: hidden; 
+}
+
+.errorSpace {
+  height: 3em;
+  text-align: center;
+  line-height: 3em;
 }

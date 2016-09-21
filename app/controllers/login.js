@@ -18,31 +18,40 @@ export default Ember.Controller.extend({
     return this.get('currentUser').get('logged');
   }),
 
-  showRegisterMsg: false,
+  registerMsg: '',
 
-  showLoginMsg: false,
+  loginMsg: '',
 
   actions: {
     authenticate() {
       const login = this.get('login');
+      this.set('login', '');
       const password = this.get('loginPassword');
-      debugger;
+      this.set('loginPassword', '');
       this.get('authManager').authenticate(login, password, (err) => {
-        if (err) console.log('Wrong credentials');
+        if (err) {
+          this.set('loginMsg', err);
+        }
         else {
           this.transitionToRoute('loggedIn');
           this.get('navbar').updateBar();
-          this.set('showRegisterMsg', false);
         }
       });
     },
 
     register() {
-      const { register, password } = this.getProperties('register', 'registerPassword');
-      //this.get('authManager').register(register, password, (err) => {
-        //if (err) console.log(err);
-        //else {
-          this.set('showRegisterMsg',true);
+      const register = this.get('register');
+      this.set('register', '');
+      const password = this.get('registerPassword');
+      this.set('registerPassword', '');
+      this.get('authManager').register(register, password, (err) => {
+        if (err) {
+          this.set('registerMsg', err);
+        }
+        else {
+          this.set('registerMsg', 'Anmeldung erfolgreich, bitte einloggen');
+        }
+      });
     },
   },
 });
