@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import AdaptiveStore from 'ember-simple-auth/session-stores/adaptive';
 import { storageFor } from 'ember-local-storage';
 /*
   globals:
@@ -14,7 +13,7 @@ export default Ember.Controller.extend({
 
   navbar: Ember.inject.controller('navbar'),
 
-  isLogged: Ember.computed(function() {
+  isLogged: Ember.computed(function islogged() {
     return this.get('currentUser').get('logged');
   }),
 
@@ -31,8 +30,7 @@ export default Ember.Controller.extend({
       this.get('authManager').authenticate(login, password, (err) => {
         if (err) {
           this.set('loginMsg', err);
-        }
-        else {
+        } else {
           this.transitionToRoute('loggedIn');
           this.get('navbar').updateBar();
         }
@@ -47,8 +45,7 @@ export default Ember.Controller.extend({
       this.get('authManager').register(register, password, (err) => {
         if (err) {
           this.set('registerMsg', err);
-        }
-        else {
+        } else {
           this.set('registerMsg', 'Anmeldung erfolgreich, bitte einloggen');
         }
       });

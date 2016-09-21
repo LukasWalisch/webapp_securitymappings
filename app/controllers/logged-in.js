@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
 
   navbar: Ember.inject.controller('navbar'),
 
-  isLogged: Ember.computed(function(){
+  isLogged: Ember.computed(function isLogged() {
     return this.get('currentUser').get('logged');
   }),
 
