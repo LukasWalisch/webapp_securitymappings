@@ -1,0 +1,15 @@
+<div class="mappings-content">
+  <div class="visualization">
+    <div id="visual-container">
+    </div>
+    <div id="mapping">
+      Mappings:
+      {{#each currentMappings as |mapping|}}
+        <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+      {{/each}}<br>
+      {{if currentMappings " " "No Mappings"}}
+    </div>
+  </div>
+
+  <div id="pattern-info">{{nodeInfo}}</div>
+</div>

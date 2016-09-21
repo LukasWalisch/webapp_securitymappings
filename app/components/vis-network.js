@@ -1,43 +1,14 @@
 import Ember from 'ember';
 import dataConverter from '../utils/dataConverter';
 
-export default Ember.Controller.extend({
+export default Ember.Component.extend({
 
-  /*
-    globals:
-      document
-      vis
-  */
+  store: Ember.inject.service(),
 
-  /*
-  properties
-   */
-
-  nodeInfo: null,
-  currentMappings: null,
-  hasMapping: false,
-
-  /*
-  methods
-   */
-
-  /**
-   * fetches data from db and triggers renderNetwork
-   */
   init() {
-    this._super();
+    this._super(...arguments);
     Ember.run.schedule('afterRender', this, function afterRender() {
-      // fetch data from db
-      const promiseArray = [];
-      promiseArray.push(this.get('store').findAll('tactic'));
-      promiseArray.push(this.get('store').findAll('pattern'));
-      promiseArray.push(this.get('store').findAll('mapping'));
-
-      Ember.RSVP.all(promiseArray).then(() => {
-
-        // when db fetches finished, render Network and enable tooltips
-        this.renderNetwork();
-      });
+      this.renderNetwork();
     });
 
   },
@@ -48,9 +19,9 @@ export default Ember.Controller.extend({
    */
   renderNetwork() {
 
-    const tactics = this.convertToArray(this.store.peekAll('tactic'));
-    const patterns = this.convertToArray(this.store.peekAll('pattern'));
-    const mappings = this.convertToArray(this.store.peekAll('mapping'));
+    const tactics = this.convertToArray(this.get('store').peekAll('tactic'));
+    const patterns = this.convertToArray(this.get('store').peekAll('pattern'));
+    const mappings = this.convertToArray(this.get('store').peekAll('mapping'));
 
     const dynamicData = dataConverter.dataToDataset(tactics, patterns, mappings);
 
@@ -67,10 +38,13 @@ export default Ember.Controller.extend({
         hierarchical: {
           enabled: true,
           sortMethod: 'directed',
+          nodeSpacing: 200,
         },
       },
       interaction: {
         dragNodes: false,
+        zoomView: false,
+        dragView: false,
       },
 
     };
@@ -108,13 +82,13 @@ export default Ember.Controller.extend({
   displayNodeData(event) {
     if (event.nodes.length > 0) {
       const nodeId = event.nodes[0];
-      let node = this.store.peekRecord('tactic', nodeId);
+      let node = this.get('store').peekRecord('tactic', nodeId);
 
       // if node exists --> its a tactic
       if (!node) {
 
         // its a pattern
-        node = this.store.peekRecord('pattern', nodeId);
+        node = this.get('store').peekRecord('pattern', nodeId);
       }
       this.set('nodeInfo', node.toJSON().info);
       this.set('currentMappings', node.get('mappingIds'));
@@ -126,19 +100,29 @@ export default Ember.Controller.extend({
     }
   },
 
+  /**
+   * when the network is zoomed to a node, the tooltips are switched off, otherwise turned on
+   * @param  {vis network} network to get Information about the current scale
+   * @return {void}         [description]
+   */
   toggleTooltip(network) {
+
+    // timeout to wait until the zooming of nodes is finished to check the scale
     window.setTimeout(() => {
       if (network.getScale() === 1) {
-        this.disableTooltip();
+        const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
+        if (tooltip.className.indexOf(' hide') === -1) {
+          tooltip.className += ' hide';
+        }
       } else {
-        this.enableTooltip();
+        document.getElementsByClassName('vis-network-tooltip')[0].className = 'vis-network-tooltip';
       }
-    }, 2000);
+    }, 1100);
   },
 
 
   /**
-   * converts Array from Ember Store to Array
+   * converts Array from Ember Store to JS Array
    * @param  {EmberArray} emberArray
    * @return {Array}
    */
@@ -151,27 +135,11 @@ export default Ember.Controller.extend({
   },
 
   /**
-    * remove "display: none" to the tooltip css class
-    * @return {void}
-    */
-  enableTooltip() {
-
-    document.getElementsByClassName('vis-network-tooltip')[0].className = 'vis-network-tooltip';
-
-  },
-
-  /**
-   * set "display: none" to the tooltip css class
+   * enables the view to mappings and info when a node is clicked
    * @return {void}
    */
-  disableTooltip() {
-
-    document.getElementsByClassName('vis-network-tooltip')[0].className += ' hide';
-  },
-
   showContent() {
     document.getElementById('mapping').setAttribute('style', 'visibility:visible;');
     document.getElementById('pattern-info').setAttribute('style', 'visibility:visible;');
   },
-
 });
