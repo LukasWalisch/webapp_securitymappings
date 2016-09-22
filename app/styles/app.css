@@ -41,12 +41,12 @@ body {
   flex-direction: row;
 }
 
-.visualization #mapping {
+.visualization #pattern-info {
   width: 43%;
   border-left: 1px solid #E5E5E5;
 }
 
-#pattern-info {
+#mapping {
   border-top: 1px solid #E5E5E5;
 }
 #pattern-info,
