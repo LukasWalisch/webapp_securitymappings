@@ -49,6 +49,11 @@ body {
 #mapping {
   border-top: 1px solid #E5E5E5;
 }
+
+#mapping > li {
+  cursor: pointer;
+}
+
 #pattern-info,
 .visualization #mapping {
   visibility: hidden;
