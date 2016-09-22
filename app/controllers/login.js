@@ -45,7 +45,6 @@ export default Ember.Controller.extend({
 
     register() {
       const register = this.get('register');
-      console.log(encoded);
       this.set('register', '');
       const password = this.get('registerPassword');
       this.set('registerPassword', '');

@@ -7,7 +7,7 @@
   <div id="mapping">
     Mappings:
     {{#each mappingsInfo as |mapping|}}
-      <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+      <li {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
     {{/each}}<br>
     {{if mappingsInfo " " "No Mappings"}}
   </div>
@@ -17,3 +17,11 @@
   {{/if}}
 
 </div>
+
+
+ {{#bs-modal open=openModal title="Simple Dialog"}}
+   {{#unless currentUser.logged}}
+    only rating when logged in!
+    <div id="rating-container"></div>
+   {{/unless}}
+ {{/bs-modal}}
