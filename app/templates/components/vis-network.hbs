@@ -2,14 +2,18 @@
   <div class="visualization">
     <div id="visual-container">
     </div>
-    <div id="mapping">
-      Mappings:
-      {{#each currentMappings as |mapping|}}
-        <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
-      {{/each}}<br>
-      {{if currentMappings " " "No Mappings"}}
-    </div>
+    <div id="pattern-info">{{nodeInfo}}</div>
+  </div>
+  <div id="mapping">
+    Mappings:
+    {{#each mappingsInfo as |mapping|}}
+      <li>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+    {{/each}}<br>
+    {{if mappingsInfo " " "No Mappings"}}
   </div>
 
-  <div id="pattern-info">{{nodeInfo}}</div>
+  {{#if showOverview}}
+    <button {{action "zoomOverview"}}>Overview</button>
+  {{/if}}
+
 </div>
