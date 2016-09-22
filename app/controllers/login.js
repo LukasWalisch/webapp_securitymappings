@@ -17,9 +17,15 @@ export default Ember.Controller.extend({
     return this.get('currentUser').get('logged');
   }),
 
+  host: null,
+
   registerMsg: '',
 
   loginMsg: '',
+
+  init() {
+    this.set('host', this.store.adapterFor('application').get('host'));
+  },
 
   actions: {
     authenticate() {
@@ -27,7 +33,7 @@ export default Ember.Controller.extend({
       this.set('login', '');
       const password = this.get('loginPassword');
       this.set('loginPassword', '');
-      this.get('authManager').authenticate(login, password, (err) => {
+      this.get('authManager').authenticate(login, password, this.host, (err) => {
         if (err) {
           this.set('loginMsg', err);
         } else {
@@ -39,10 +45,11 @@ export default Ember.Controller.extend({
 
     register() {
       const register = this.get('register');
+      console.log(encoded);
       this.set('register', '');
       const password = this.get('registerPassword');
       this.set('registerPassword', '');
-      this.get('authManager').register(register, password, (err) => {
+      this.get('authManager').register(register, password, this.host, (err) => {
         if (err) {
           this.set('registerMsg', err);
         } else {
