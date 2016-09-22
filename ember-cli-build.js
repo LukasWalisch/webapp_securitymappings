@@ -23,6 +23,8 @@ module.exports = function(defaults) {
   app.import('bower_components/vis/dist/vis.js');
   app.import('bower_components/vis/dist/vis.css');
   app.import('bower_components/lodash/dist/lodash.js');
+  app.import('bower_components/five-star-rating/css/rating.min.css');
+  app.import('bower_components/five-star-rating/js/dist/rating.min.js');
 
   return app.toTree();
 };

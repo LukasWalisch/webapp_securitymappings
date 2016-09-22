@@ -1,3 +1,4 @@
+import { storageFor } from 'ember-local-storage'
 import Ember from 'ember';
 import dataConverter from '../utils/dataConverter';
 
@@ -10,6 +11,8 @@ export default Ember.Component.extend({
   showOverview: false,
   nodeInfo: null,
   mappingsInfo: null,
+  openModal: false,
+  currentUser: storageFor('currentUser'),
 
   /* ḿethods */
 
@@ -164,6 +167,10 @@ export default Ember.Component.extend({
   actions: {
     zoomOverview() {
       this.unFocusNode();
+    },
+
+    doOpenModal() {
+      this.set('openModal', true);
     },
 
   },
