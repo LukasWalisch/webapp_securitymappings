@@ -127,7 +127,6 @@ export default Ember.Component.extend({
 
     // timeout to wait until the zooming of nodes is finished to check the scale
     window.setTimeout(() => {
-      debugger;
       if (network.getScale() >= 1) {
         const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
         if (tooltip.className.indexOf(' hide') === -1) {
