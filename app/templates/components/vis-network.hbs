@@ -7,7 +7,13 @@
   <div id="mapping">
     Mappings:
     {{#each mappingsInfo as |mapping|}}
-      <li {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+
+      <li 
+        {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}
+        {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.avgRating numbRating=mapping.ratingNumb onClick=(action "receiveRating")}}
+      </li>
+      <br>
+
     {{/each}}<br>
     {{if mappingsInfo " " "No Mappings"}}
   </div>
@@ -19,9 +25,10 @@
 </div>
 
 
- {{#bs-modal open=openModal title="Simple Dialog"}}
-   {{#unless currentUser.logged}}
-    only rating when logged in!
-    <div id="rating-container"></div>
-   {{/unless}}
+ {{!-- info modal --}}
+
+  {{#bs-modal open=openModal title=(string-concat currentMapping.tacticId.name currentMapping.patternId.name)}}
+    <h2>Mapping Info</h2>
+    <div>{{currentMapping.info}}</div>
+    {{star-rating mayRate=currentUser.logged mappingId=currentMapping.id initialRating=currentMapping.avgRating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
  {{/bs-modal}}

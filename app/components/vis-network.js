@@ -1,4 +1,4 @@
-import { storageFor } from 'ember-local-storage'
+import { storageFor } from 'ember-local-storage';
 import Ember from 'ember';
 import dataConverter from '../utils/dataConverter';
 
@@ -13,6 +13,8 @@ export default Ember.Component.extend({
   mappingsInfo: null,
   openModal: false,
   currentUser: storageFor('currentUser'),
+  ratingComponent: null,
+  currentMapping: null,
 
   /* ḿethods */
 
@@ -20,7 +22,24 @@ export default Ember.Component.extend({
     this._super(...arguments);
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
+
+
+      this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
+
+  },
+
+  renderRatings() {
+    if (!this.get('mappingsInfo')) return;
+    const mappings = this.get('mappingsInfo');
+    let container;
+    // let mappingRating;
+    mappings.forEach((mapping) => {
+      container = document.querySelector(`#rating-${mapping.get('id')}`);
+      //  = Math.round(mapping.get('avgRating'));
+      rating(container, 0, 5, false);
+    });
+
 
   },
 
@@ -93,30 +112,38 @@ export default Ember.Component.extend({
         // its a pattern
         node = this.get('store').peekRecord('pattern', nodeId);
       }
+
       network.focus(event.nodes[0], {
         scale: 1.0,
         offset: { x: 0, y: 0 },
-        animation: true,
+        animation: { duration: 500 },
       });
-      this.toggleTooltip(network);
 
-      this.set('nodeInfo', node.get('info'));
-      this.set('mappingsInfo', node.get('mappingIds'));
-      this.set('showOverview', true);
+      setTimeout(() => {
+        this.set('nodeInfo', node.get('info'));
+        this.set('mappingsInfo', node.get('mappingIds'));
+        this.set('showOverview', true);
+        this.renderRatings();
+        this.showContent();
+        this.toggleTooltip(network);
+      }, 550);
 
-      this.showContent();
 
     }
   },
 
   unFocusNode() {
     const network = this.get('network');
-    network.fit({ animation: true });
+
+    network.fit({
+      animation: { duration: 500 },
+    });
+
     network.unselectAll();
     this.toggleTooltip(network);
 
     this.set('nodeInfo', null);
-    this.set('mappingInfo', null);
+    this.set('mappingsInfo', null);
     this.set('showOverview', false);
   },
 
@@ -128,17 +155,14 @@ export default Ember.Component.extend({
    */
   toggleTooltip(network) {
 
-    // timeout to wait until the zooming of nodes is finished to check the scale
-    window.setTimeout(() => {
-      if (network.getScale() >= 1) {
-        const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
-        if (tooltip.className.indexOf(' hide') === -1) {
-          tooltip.className += ' hide';
-        }
-      } else {
-        document.getElementsByClassName('vis-network-tooltip')[0].className = 'vis-network-tooltip';
+    if (network.getScale() >= 1) {
+      const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
+      if (tooltip.className.indexOf(' hide') === -1) {
+        tooltip.className += ' hide';
       }
-    }, 1100);
+    } else {
+      document.getElementsByClassName('vis-network-tooltip')[0].className = 'vis-network-tooltip';
+    }
   },
 
 
@@ -169,8 +193,19 @@ export default Ember.Component.extend({
       this.unFocusNode();
     },
 
-    doOpenModal() {
+    doOpenModal(mapping) {
+      this.set('currentMapping', mapping);
       this.set('openModal', true);
+    },
+
+    receiveRating(mappingId, userRating, isValid) {
+      if (!isValid) {
+        if (this.get('currentUser.logged')) {
+          this.toast.error('Mappings können nur einmal bewertet werden', '', { closeButton: false, progressBar: false });
+        } else {
+          this.toast.error('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
+        }
+      }
     },
 
   },

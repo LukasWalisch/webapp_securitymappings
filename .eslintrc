@@ -24,5 +24,6 @@
     "prefer-template" : 0,
     "no-undef" : 0,
     "prefer-rest-params": 0,
+    "no-plusplus": 0,
   }
 }
