@@ -1,5 +1,22 @@
 {{#if isLogged}}
   <h1>seems you are registered</h1>
+  <button {{action 'updateMappingTest'}}>Update Mapping</button>
+   <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      {{#bs-dropdown tagName="li"}}
+        {{#bs-dropdown-toggle}}Dropdown <span class="caret"></span>{{/bs-dropdown-toggle}}
+        {{#bs-dropdown-menu}}
+            <li><a href="" {{action "triggerNewMapping"}}>Neues Mapping</a></li>
+            {{#each-in mappings as |key mapping|}}
+              <li><a href="" {{action "triggerEditMapping"}}>{{mapping}}</a></li>
+            {{/each-in}}
+        {{/bs-dropdown-menu}}
+      {{/bs-dropdown}}
+    </ul>
+  </div>
+  <div id="mappingEditor">
+
+  </div>
 {{else}}
 You are not logged in, please Login first
 {{/if}}

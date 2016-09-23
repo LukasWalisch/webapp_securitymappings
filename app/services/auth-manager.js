@@ -16,6 +16,7 @@ export default Ember.Service.extend({
         const err = result.errors.msg;
         return callback(err);
       }
+      this.get('currentUser').set('id', result.user.id);
       this.get('currentUser').set('username', result.user.username);
       this.get('currentUser').set('token', result.user.token.token);
       this.get('currentUser').set('logged', true);

@@ -4,7 +4,7 @@ const Storage = StorageObject.extend();
 
 Storage.reopenClass({
   initialState() {
-    const initial = { username: 'Not logged in', token: 'default', logged: false };
+    const initial = { id: null, username: 'Not logged in', token: null, logged: false };
     return initial;
   },
 });
