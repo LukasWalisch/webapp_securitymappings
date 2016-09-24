@@ -13,9 +13,7 @@ export default Ember.Controller.extend({
 
   navbar: Ember.inject.controller('navbar'),
 
-  isLogged: Ember.computed(function islogged() {
-    return this.get('currentUser').get('logged');
-  }),
+  isLogged: false,
 
   host: null,
 
@@ -25,6 +23,10 @@ export default Ember.Controller.extend({
 
   init() {
     this.set('host', this.store.adapterFor('application').get('host'));
+    this.get('authManager').checkLogged(this.get('host'), (err) => {
+      if (!err) this.set('isLogged', true);
+    });
+
   },
 
   actions: {
@@ -38,7 +40,7 @@ export default Ember.Controller.extend({
           this.set('loginMsg', err);
         } else {
           this.transitionToRoute('loggedIn');
-          this.get('navbar').updateBar();
+          this.get('navbar').updateBar(true);
         }
       });
     },

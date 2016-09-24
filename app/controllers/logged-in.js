@@ -5,15 +5,27 @@ export default Ember.Controller.extend({
 
   currentUser: storageFor('currentUser'),
 
+  authManager: Ember.inject.service('authManager'),
+
   navbar: Ember.inject.controller('navbar'),
 
-  isLogged: Ember.computed(function isLogged() {
-    return this.get('currentUser').get('logged');
-  }),
+  isLogged: false,
 
-  mappings: "",
+  host: '',
+
+  mappings: '',
 
   init() {
+
+    //Check if user is logged in
+    this.set('host', this.store.adapterFor('application').get('host'));
+    this.get('authManager').checkLogged(this.get('host'), (err) => {
+      debugger;
+      if (!err) this.set('isLogged', true);
+      else this.set('isLogged', false);
+    });
+
+
     const rawMappings = this.get('store').peekAll('mapping');
     const userId = this.get('currentUser').get('id');
     let mappingArray = new Array();
@@ -37,7 +49,7 @@ export default Ember.Controller.extend({
   actions: {
     logoff() {
       this.get('currentUser').reset();
-      this.get('navbar').updateBar();
+      this.get('navbar').updateBar(false);
       this.transitionToRoute('login');
     },
 

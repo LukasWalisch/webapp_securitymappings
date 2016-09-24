@@ -6,7 +6,7 @@ export default DS.RESTAdapter.extend({
   currentUser: storageFor('currentUser'),
 
   namespace: 'user',
-  host: 'https://10.0.0.4:8443',
+  host: 'https://10.0.0.8:8443',
   headers: Ember.computed(function() {
     const user = this.get('currentUser').get('username');
     const token = this.get('currentUser').get('token');
@@ -16,6 +16,4 @@ export default DS.RESTAdapter.extend({
       'x-access-token': token,
     };
   }),
-
-
 });

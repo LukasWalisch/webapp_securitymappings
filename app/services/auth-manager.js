@@ -5,6 +5,31 @@ export default Ember.Service.extend({
 
   currentUser: storageFor('currentUser'),
 
+  checkLogged(host, callback) {
+    
+
+    const id = this.get('currentUser').get('id');
+    const token = this.get('currentUser').get('token');
+    const username = this.get('currentUser').get('username');
+
+    return Ember.$.ajax({
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-key': username,
+        'x-access-token': token,
+      },
+      url: host + '/user/check',
+      data: { id },
+    }).then((result) => {
+      if (result.errors) {
+        return callback(true);
+      }
+      if (result.bool) return callback();
+      return callback(true);
+    });
+  },
+
   authenticate(login, password, host, callback) {
     if (!login || !password)callback('Username or Password wrong');
     return Ember.$.ajax({
@@ -19,7 +44,6 @@ export default Ember.Service.extend({
       this.get('currentUser').set('id', result.user.id);
       this.get('currentUser').set('username', result.user.username);
       this.get('currentUser').set('token', result.user.token.token);
-      this.get('currentUser').set('logged', true);
       return callback();
     });
   },

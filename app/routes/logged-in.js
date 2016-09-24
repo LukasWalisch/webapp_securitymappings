@@ -6,7 +6,7 @@ export default Ember.Route.extend({
   currentUser: storageFor('currentUser'),
 
   beforeModel() {
-    if (!this.get('currentUser').get('logged')) {
+    if (!this.get('currentUser').get('token')) {
       this.transitionTo('mappings');
     }
   },
