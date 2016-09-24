@@ -12,9 +12,11 @@ export default Ember.Service.extend({
   checkLogged(host, callback) {
     
     const hostt = this.get('store').adapterFor('application').get('host');
-    const id = this.get('currentUser').get('id');
+    let id = this.get('currentUser').get('id');
     const token = this.get('currentUser').get('token');
     const username = this.get('currentUser').get('username');
+
+    if (!id) id = 'none';
 
     return Ember.$.ajax({
       method: 'GET',
@@ -25,7 +27,7 @@ export default Ember.Service.extend({
       },
       url: hostt + '/user/users/' + id,
     }).then((result) => {
-      if (!result.user.id) {
+      if (!result.user) {
         return callback(true, null);
       }
       this.get('store').findRecord('user', result.user.id).then((result) => {
