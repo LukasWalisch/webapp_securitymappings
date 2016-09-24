@@ -20,7 +20,7 @@ body {
 }
 
 #body-container {
-  display: flex;
+  display: block;
   /*justify-content: center;*/
   flex-direction: column;
   flex: 1 100%;
@@ -56,6 +56,33 @@ body {
 
 #mapping > li:hover {
   font-weight: bold;
+}
+
+#editorContainer {
+  dispaly: block;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 
+              0 1px 5px 0 rgba(0, 0, 0, 0.12), 
+              0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  border: 1px solid #E5E5E5;
+  border-radius: 2px;
+}
+
+#mappingEditor {
+  float: left;
+  height: 100%;
+  width: 75%;
+  border-right: 1px solid lightgrey;
+}
+
+#mappingList {
+  float: left;
+  height:100%;
+  width:25%;
+  padding-left: 0.5em;
+  padding-top: 1em;
+  padding-right:0.5em;
 }
 
 #pattern-info,

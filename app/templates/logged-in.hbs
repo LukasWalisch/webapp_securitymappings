@@ -1,20 +1,16 @@
 {{#if isLogged}}
-  <h1>seems you are registered</h1>
-  <button {{action 'updateMappingTest'}}>Update Mapping</button>
-   <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      {{#bs-dropdown tagName="li"}}
-        {{#bs-dropdown-toggle}}Dropdown <span class="caret"></span>{{/bs-dropdown-toggle}}
-        {{#bs-dropdown-menu}}
-            <li><a href="" {{action "triggerNewMapping"}}>Neues Mapping</a></li>
-            {{#each-in mappings as |key mapping|}}
-              <li><a href="" {{action "triggerEditMapping"}}>{{mapping}}</a></li>
-            {{/each-in}}
-        {{/bs-dropdown-menu}}
-      {{/bs-dropdown}}
+   <div id="editorContainer">
+     <div id="mappingEditor">
+      container 1
+    </div>
+    <div id="mappingList">
+    <ul style="list-style-type: none; padding: 0">
+          <button style="width: 100%;" {{action "triggerNewMapping"}}>New Mapping</button><br><br>
+        {{#each-in mappings as |key mapping|}}
+          <a href="" {{action "triggerEditMapping"}}>{{mapping}}</a><br>
+        {{/each-in}}
     </ul>
-  </div>
-  <div id="mappingEditor">
+    </div>
 
   </div>
 {{else}}

@@ -21,10 +21,16 @@ export default Ember.Controller.extend({
 
   init() {
     this.set('host', this.store.adapterFor('application').get('host'));
+    
     this.get('authManager').checkLogged(this.get('host'), (err) => {
       if (!err) this.set('isLogged', true);
+      else this.set('isLogged', false);
     });
 
+  },
+
+  logoff() {
+    this.set('isLogged', false);
   },
 
   actions: {
@@ -37,7 +43,7 @@ export default Ember.Controller.extend({
         if (err) {
           this.set('loginMsg', err);
         } else {
-          this.transitionToRoute('loggedIn');
+          this.transitionToRoute('mappings');
           this.get('navbar').updateBar(true);
         }
       });

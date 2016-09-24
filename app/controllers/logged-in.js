@@ -20,15 +20,17 @@ export default Ember.Controller.extend({
     //Check if user is logged in
     this.set('host', this.store.adapterFor('application').get('host'));
     this.get('authManager').checkLogged(this.get('host'), (err) => {
-      debugger;
       if (!err) this.set('isLogged', true);
       else this.set('isLogged', false);
     });
 
+    this.refreshMappingList();
+  },
 
+  refreshMappingList() {
     const rawMappings = this.get('store').peekAll('mapping');
     const userId = this.get('currentUser').get('id');
-    let mappingArray = new Array();
+    const mappingArray = [];
     rawMappings.forEach((mapping) => {
       if (mapping.toJSON().owner === userId) {
         const name = mapping.get('tacticId').get('name') + ' - ' + mapping.get('patternId').get('name');
@@ -47,10 +49,9 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    logoff() {
-      this.get('currentUser').reset();
-      this.get('navbar').updateBar(false);
-      this.transitionToRoute('login');
+
+    refreshMappingListAction() {
+      this.refreshMappingList();
     },
 
     updateMappingTest() {

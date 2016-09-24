@@ -1,29 +1,39 @@
 {{#if isLogged}}
 You are logged in alreay, switch to Rate/Navigation
 {{else}}
-<div class="loginRegister">
-    <form {{action 'authenticate' on='submit'}}>
-        <div class="form-group">
-            <h2>Login</h2>
-            <label for="exampleInputEmail1">Username</label>
-            {{input value=login placeholder='Login'}}<br>
+<div style="display: flex; height: 100%;">
+    <div class="loginRegister">
+        <form {{action 'authenticate' on='submit'}}>
+            <div class="form-group">
+                <h2>Login</h2>
+                <label for="exampleInputEmail1">Username</label>
+                {{input value=login placeholder='Login'}}<br>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                {{input value=loginPassword placeholder='password' type='password'}}<br>
+            </div>
+            <button type="submit" class="btn btn-default">Login</button>
+        </form>
+        <div class="errorSpace">
+            {{loginMsg}}
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            {{input value=loginPassword placeholder='password' type='password'}}<br>
-        </div>
-        <button type="submit" class="btn btn-default">Login</button>
-    </form>
-    <div class="errorSpace">
-        {{loginMsg}}
     </div>
-</div>
-<div class="loginRegister">
-    <form {{action 'register' on='submit'}}>
-        <div class="form-group">
-            <h2>Register</h2>
-            <label for="exampleInputEmail1">Username</label>
-            {{input value=register placeholder='Login'}}<br>
+    <div class="loginRegister">
+        <form {{action 'register' on='submit'}}>
+            <div class="form-group">
+                <h2>Register</h2>
+                <label for="exampleInputEmail1">Username</label>
+                {{input value=register placeholder='Login'}}<br>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                {{input value=registerPassword placeholder='password' type='password'}}<br>
+            </div>
+            <button type="submit" class="btn btn-default">Register</button>
+        </form>
+        <div class="errorSpace">
+            {{registerMsg}}
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>

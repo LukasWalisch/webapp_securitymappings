@@ -5,6 +5,14 @@ export default Ember.Route.extend({
 
   currentUser: storageFor('currentUser'),
 
+  actions: {
+    didTransition() {
+      this.controllerFor('logged-in').send('refreshMappingListAction');
+      this.replaceWith('loggedIn');
+      return true;
+    },
+  },
+
   beforeModel() {
     if (!this.get('currentUser').get('token')) {
       this.transitionTo('mappings');

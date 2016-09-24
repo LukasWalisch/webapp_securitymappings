@@ -3,6 +3,8 @@ import { storageFor } from 'ember-local-storage';
 
 export default Ember.Controller.extend({
 
+  login: Ember.inject.controller(),
+
   currentUser: storageFor('currentUser'),
 
   authManager: Ember.inject.service('authManager'),
@@ -17,6 +19,7 @@ export default Ember.Controller.extend({
       this.set('isLogged', false);
       this.updateBar();
       this.transitionToRoute('login');
+      this.get('login').logoff();
     },
 
   },
