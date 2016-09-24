@@ -10,7 +10,7 @@ export default Ember.Service.extend({
   host: null,
 
   checkLogged(host, callback) {
-    
+
     const hostt = this.get('store').adapterFor('application').get('host');
     let id = this.get('currentUser').get('id');
     const token = this.get('currentUser').get('token');
@@ -30,8 +30,8 @@ export default Ember.Service.extend({
       if (!result.user) {
         return callback(true, null);
       }
-      this.get('store').findRecord('user', result.user.id).then((result) => {
-        return callback(null, result);
+      return this.get('store').findRecord('user', result.user.id).then((result) => {
+        callback(null, result);
       });
     });
   },
