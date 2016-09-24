@@ -5,9 +5,13 @@ export default Ember.Service.extend({
 
   currentUser: storageFor('currentUser'),
 
+  store: Ember.inject.service(),
+
+  host: null,
+
   checkLogged(host, callback) {
     
-
+    const hostt = this.get('store').adapterFor('application').get('host');
     const id = this.get('currentUser').get('id');
     const token = this.get('currentUser').get('token');
     const username = this.get('currentUser').get('username');
@@ -19,14 +23,14 @@ export default Ember.Service.extend({
         'x-key': username,
         'x-access-token': token,
       },
-      url: host + '/user/check',
-      data: { id },
+      url: hostt + '/user/users/' + id,
     }).then((result) => {
-      if (result.errors) {
-        return callback(true);
+      if (!result.user.id) {
+        return callback(true, null);
       }
-      if (result.bool) return callback();
-      return callback(true);
+      this.get('store').findRecord('user', result.user.id).then((result) => {
+        return callback(null, result);
+      });
     });
   },
 
