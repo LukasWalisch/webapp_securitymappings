@@ -12,7 +12,7 @@
 
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="nav navbar-nav">
-              {{#if logged}}
+              {{#if isLogged}}
               {{#link-to 'loggedIn' tagName="li"}}<a href="">Edit Mapping</a>{{/link-to}}
               <li>
                 <a href="" {{action 'logoff' on='click'}} type="submit">Logoff</a>

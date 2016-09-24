@@ -16,6 +16,4 @@ export default DS.RESTAdapter.extend({
       'x-access-token': token,
     };
   }),
-
-
 });
