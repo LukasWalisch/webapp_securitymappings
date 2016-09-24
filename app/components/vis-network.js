@@ -26,6 +26,7 @@ export default Ember.Component.extend({
     // check if currently logged in
     const host = this.get('store').adapterFor('application').get('host');
     this.get('authManager').checkLogged(host, (err, currentUser) => {
+      debugger;
       if (!err) {
         this.set('isLogged', true);
         this.set('currentUser', currentUser);
@@ -235,7 +236,7 @@ export default Ember.Component.extend({
         if (this.get('isLogged')) {
           this.toast.warning('Sie haben dieses Mapping bereits bewertet', '', { closeButton: false, progressBar: false });
         } else {
-          this.toast.waring('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
+          this.toast.warning('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
         }
       } else {
         this.set('userCanRate', false);
@@ -243,8 +244,7 @@ export default Ember.Component.extend({
         // persist the user rating and add rating to users rated mappings
         this.get('store').findRecord('mapping', mappingId).then((mapping) => {
           this.get('store').findRecord('user', this.get('currentUser.id')).then((user) => {
-            debugger;
-            user.get('ratedMappings').addObject(mappingId);
+            user.get('ratedMappings').addObject(mapping);
             user.save();
           });
           mapping.set('rating', mapping.get('rating') + userRating);

@@ -41,6 +41,7 @@ export default Ember.Controller.extend({
     });
   },
 
+  //Called if someone logged in or logged out
   updateBar(triggerLogged) {
     this.set('username', this.get('currentUser').get('username'));
     this.set('isLogged', triggerLogged);
