@@ -30,5 +30,5 @@
   {{#bs-modal open=openModal title=(string-concat currentMapping.tacticId.name currentMapping.patternId.name)}}
     <h2>Mapping Info</h2>
     <div>{{currentMapping.info}}</div>
-    {{star-rating mayRate=currentUser.logged mappingId=currentMapping.id initialRating=currentMapping.avgRating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
+    {{star-rating mayRate=currentUser.isLogged mappingId=currentMapping.id initialRating=currentMapping.avgRating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
  {{/bs-modal}}

@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   /* properties */
 
   store: Ember.inject.service(),
+  authManager: Ember.inject.service(),
   network: {},
   showOverview: false,
   nodeInfo: null,
@@ -15,31 +16,29 @@ export default Ember.Component.extend({
   currentUser: storageFor('currentUser'),
   ratingComponent: null,
   currentMapping: null,
+  isLogged: false,
 
   /* ḿethods */
 
   init() {
     this._super(...arguments);
+
+    // check if currently logged in
+    const host = this.store.adapterFor('application').get('host');
+    this.get('authManager').checkLogged(host, (err) => {
+      if (!err) {
+        this.set('isLogged', true);
+      } else {
+        this.set('isLogged', false);
+      }
+    });
+
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
 
 
       this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
-
-  },
-
-  renderRatings() {
-    if (!this.get('mappingsInfo')) return;
-    const mappings = this.get('mappingsInfo');
-    let container;
-    // let mappingRating;
-    mappings.forEach((mapping) => {
-      container = document.querySelector(`#rating-${mapping.get('id')}`);
-      //  = Math.round(mapping.get('avgRating'));
-      rating(container, 0, 5, false);
-    });
-
 
   },
 
@@ -123,11 +122,9 @@ export default Ember.Component.extend({
         this.set('nodeInfo', node.get('info'));
         this.set('mappingsInfo', node.get('mappingIds'));
         this.set('showOverview', true);
-        this.renderRatings();
         this.showContent();
         this.toggleTooltip(network);
       }, 550);
-
 
     }
   },
@@ -154,7 +151,6 @@ export default Ember.Component.extend({
    * @return {void}         [description]
    */
   toggleTooltip(network) {
-
     if (network.getScale() >= 1) {
       const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
       if (tooltip.className.indexOf(' hide') === -1) {
@@ -200,12 +196,13 @@ export default Ember.Component.extend({
 
     receiveRating(mappingId, userRating, isValid) {
       if (!isValid) {
-        if (this.get('currentUser.logged')) {
+        if (this.get('currentUser.isLogged')) {
           this.toast.error('Mappings können nur einmal bewertet werden', '', { closeButton: false, progressBar: false });
         } else {
           this.toast.error('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
         }
       }
+      // TODO: persist userRating
     },
 
   },

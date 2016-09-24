@@ -22,26 +22,16 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
   
-  const ratingImg = new Funnel('bower_components/five-star-rating', {
-    srcDir: 'img', 
-    destDir: 'assets/five-star-rating/img',
-  });
-
-  const ratingCSS = new Funnel('bower_components/five-star-rating', {
-    srcDir: 'css',
-    destDir: 'assets/five-star-rating/css'
-  });
-
-  const ratingJS = new Funnel('bower_components/five-star-rating/js', {
-    srcDir: 'src', 
-    destDir: 'assets/five-star-rating/js',
+  const img = new Funnel('public', {
+    destDir: 'public',
   });
 
   app.import('bower_components/vis/dist/vis.js');
   app.import('bower_components/vis/dist/vis.css');
   app.import('bower_components/lodash/dist/lodash.js');
-  app.import('bower_components/ember/ember-template-compiler.js');
 
 
-  return new MergeTrees([app.toTree(), ratingImg, ratingJS, ratingCSS]);
+  return new MergeTrees([app.toTree(), img]);
+
+
 };
