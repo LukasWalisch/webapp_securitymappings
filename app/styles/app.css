@@ -54,6 +54,10 @@ body {
   cursor: pointer;
 }
 
+#mapping > li:hover {
+  font-weight: bold;
+}
+
 #pattern-info,
 .visualization #mapping {
   visibility: hidden;
@@ -121,5 +125,19 @@ div.vis-network-tooltip.hide {
 
 .c-rating__item:hover,
 .c-rating__item.is-active {
+  background-position: -24px 0;
+}
+
+.c-rating__item_disabled {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 24px;
+      -ms-flex: 0 0 24px;
+          flex: 0 0 24px;
+  height: 24px;
+  background: url("../public/img/stars.svg");
+  background-position: 0 0;
+}
+
+.c-rating__item_disabled.is-active {
   background-position: -24px 0;
 }

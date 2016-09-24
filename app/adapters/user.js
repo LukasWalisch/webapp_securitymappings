@@ -16,4 +16,13 @@ export default DS.RESTAdapter.extend({
       'x-access-token': token,
     };
   }),
+
+  updateRecord(store, type, snapshot) {
+    return this._super(store, type, snapshot);
+  },
+
+  find: function(store, type, id) {
+    return this._super(store, type, id);
+  },
+
 });

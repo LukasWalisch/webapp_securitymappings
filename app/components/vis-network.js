@@ -13,10 +13,11 @@ export default Ember.Component.extend({
   nodeInfo: null,
   mappingsInfo: null,
   openModal: false,
-  currentUser: storageFor('currentUser'),
+  currentUser: null,
   ratingComponent: null,
   currentMapping: null,
   isLogged: false,
+  userCanRate: false,
 
   /* ḿethods */
 
@@ -24,19 +25,21 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     // check if currently logged in
-    const host = this.store.adapterFor('application').get('host');
-    this.get('authManager').checkLogged(host, (err) => {
+    const host = this.get('store').adapterFor('application').get('host');
+    this.get('authManager').checkLogged(host, (err, currentUser) => {
       if (!err) {
         this.set('isLogged', true);
+        this.set('currentUser', currentUser);
+
       } else {
         this.set('isLogged', false);
+        this.set('currentUser', null);
       }
     });
 
+    // render the vis network
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
-
-
       this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
 
@@ -190,17 +193,65 @@ export default Ember.Component.extend({
     },
 
     doOpenModal(mapping) {
+
+      // determine, if user should be able to rate for the currentMapping or not
+      const user = this.get('currentUser');
+      if (!this.get('currentUser')) {
+        this.set('userCanRate', false);
+      } else {
+        const ratedMappings = user.get('ratedMappings');
+
+        // iterate over rated mappings of user and compare to currentMapping
+        // if match is found, user already rated this mapping
+        const match = ratedMappings.find((ratedMapping) => {
+          if (ratedMapping.get('id') === mapping.get('id')) {
+            return true;
+          }
+          return false;
+        });
+        if (match) {
+          this.set('userCanRate', false);
+        } else {
+          this.set('userCanRate', true);
+        }
+      }
+
+      // this mapping is shown in the modal
       this.set('currentMapping', mapping);
+
+      // open the modal
       this.set('openModal', true);
     },
 
+    /**
+     * receives a rating from the star-rating component and persists the user rating
+     * also sets the úserCanRate property to false when the user has successfully rated
+     * @param  {String}  mappingId
+     * @param  {Number}  userRating
+     * @param  {Boolean} isValid    returns true, if it was the first rating attempt of the user, else false
+     * @return {void}
+     */
     receiveRating(mappingId, userRating, isValid) {
       if (!isValid) {
-        if (this.get('currentUser.isLogged')) {
-          this.toast.error('Mappings können nur einmal bewertet werden', '', { closeButton: false, progressBar: false });
+        if (this.get('isLogged')) {
+          this.toast.warning('Sie haben dieses Mapping bereits bewertet', '', { closeButton: false, progressBar: false });
         } else {
-          this.toast.error('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
+          this.toast.waring('Sie müssen sich einloggen, um Mappings zu bewerten', '', { closeButton: false, progressBar: false });
         }
+      } else {
+        this.set('userCanRate', false);
+
+        // persist the user rating and add rating to users rated mappings
+        this.get('store').findRecord('mapping', mappingId).then((mapping) => {
+          this.get('store').findRecord('user', this.get('currentUser.id')).then((user) => {
+            debugger;
+            user.get('ratedMappings').addObject(mappingId);
+            user.save();
+          });
+          mapping.set('rating', mapping.get('rating') + userRating);
+          mapping.save();
+          this.toast.success('Ihr Rating wurde gespeichert', '', { closeButton: false, progressBar: false });
+        });
       }
       // TODO: persist userRating
     },

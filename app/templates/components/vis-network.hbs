@@ -8,10 +8,8 @@
     Mappings:
     {{#each mappingsInfo as |mapping|}}
 
-      <li 
-        {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}
-        {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.avgRating numbRating=mapping.ratingNumb onClick=(action "receiveRating")}}
-      </li>
+      <li{{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+      {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.rating numbRating=mapping.ratingNumb }}
       <br>
 
     {{/each}}<br>
@@ -27,8 +25,13 @@
 
  {{!-- info modal --}}
 
-  {{#bs-modal open=openModal title=(string-concat currentMapping.tacticId.name currentMapping.patternId.name)}}
-    <h2>Mapping Info</h2>
-    <div>{{currentMapping.info}}</div>
-    {{star-rating mayRate=currentUser.isLogged mappingId=currentMapping.id initialRating=currentMapping.avgRating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
- {{/bs-modal}}
+{{#bs-modal open=openModal title=(string-concat currentMapping.tacticId.name currentMapping.patternId.name)}}
+  <h2>Mapping Info</h2>
+  <div>{{currentMapping.info}}</div>
+   {{#if isLogged}}
+    {{star-rating mayRate=userCanRate mappingId=currentMapping.id initialRating=currentMapping.rating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
+   {{else}}
+    {{star-rating mayRate=false mappingId=currentMapping.id initialRating=currentMapping.rating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}
+   {{/if}}
+  
+{{/bs-modal}}

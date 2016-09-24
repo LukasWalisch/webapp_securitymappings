@@ -17,8 +17,6 @@ export default Ember.Controller.extend({
 
   host: null,
 
-  registerMsg: '',
-
   loginMsg: '',
 
   init() {
@@ -52,9 +50,9 @@ export default Ember.Controller.extend({
       this.set('registerPassword', '');
       this.get('authManager').register(register, password, this.host, (err) => {
         if (err) {
-          this.set('registerMsg', err);
+          this.toast.error(err, '', { closeButton: false, progressBar: false });
         } else {
-          this.set('registerMsg', 'Anmeldung erfolgreich, bitte einloggen');
+          this.toast.success('Anmeldung erfolgreich, bitte einloggen', '', { closeButton: false, progressBar: false });
         }
       });
     },

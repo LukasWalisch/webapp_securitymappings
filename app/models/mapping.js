@@ -8,11 +8,5 @@ export default DS.Model.extend({
   info: DS.attr('string'),
   rating: DS.attr(),
   ratingNumb: DS.attr(),
-  avgRating: Ember.computed('rating', 'ratingNumb', function avgRating() {
-    if (this.get('ratingNumb') === 0) {
-      return 0;
-    }
-    return this.get('rating') / this.get('ratingNumb');
-  }),
 
 });

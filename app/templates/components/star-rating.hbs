@@ -1,19 +1,20 @@
 
 <ul class='c-rating'>
-{{#each stars as |star|}}
-  {{#if star.isFull}}
-    <li class="c-rating__item is-active" {{action "starClicked" star.starRating}}></li>
-  {{else}}
-    <li class="c-rating__item" {{action "starClicked" star.starRating}}></li>
-  {{/if}}
-{{/each}}
+  {{#each stars as |star|}}
+    {{#if enabled}}
+      {{#if star.isFull}}
+        <li class="c-rating__item is-active" {{action "starClicked" star.starRating}}></li>
+      {{else}}
+        <li class="c-rating__item" {{action "starClicked" star.starRating}}></li>
+      {{/if}}
+    {{else}}
+      {{#if star.isFull}}
+        <li class="c-rating__item_disabled is-active" {{action "starClicked" star.starRating}}></li>
+      {{else}}
+        <li class="c-rating__item_disabled" {{action "starClicked" star.starRating}}></li>
+      {{/if}}
+    {{/if}}
+  {{/each}}
 </ul>
 <div>Anzahl der Bewertungen: {{numbRating}}</div>
 <div>Durchschnittliche Bewertung: {{avgRating}}</div>
-
-
-{{!--   <li class="c-rating__item" {{action "starClicked" 1}}></li>
-  <li class="c-rating__item" {{action "starClicked" 2}}></li>
-  <li class="c-rating__item" {{action "starClicked" 3}}></li>
-  <li class="c-rating__item" {{action "starClicked" 4}}></li>
-  <li class="c-rating__item" {{action "starClicked" 5}}></li> --}}

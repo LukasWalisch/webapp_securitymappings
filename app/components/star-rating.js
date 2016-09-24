@@ -11,6 +11,13 @@ export default Ember.Component.extend({
   numbRating: null,
   onClick: null,
 
+  enabled: Ember.computed('onClick', function _enabled() {
+    if (this.get('onClick')) {
+      return true;
+    }
+    return false;
+  }),
+
   avgRating: Ember.computed('numbRating', 'initialRating', function _avgRating() {
     return this.get('initialRating') / this.get('numbRating');
   }),
