@@ -8,7 +8,7 @@ export default Ember.Component.extend({
   currentMapping: null,
   isLogged: false,
   mappingList: null,
-  formIsShown: false,
+  formIsShown: 'display: none;',
 
   init() {
     this._super(...arguments);
@@ -33,16 +33,17 @@ export default Ember.Component.extend({
   actions: {
 
     triggerNewMapping() {
-      this.set('formIsShown', true);
+      this.set('formIsShown', 'display: block;');
       this.set('currentMapping', null);
     },
 
     triggerEditMapping(mapping) {
+      this.set('formIsShown', 'display: block;');
       this.set('currentMapping', mapping);
     },
 
     hideEditForm() {
-      this.set('formIsShown', false);
+      this.set('formIsShown', 'display: none;');
     },
 
   },

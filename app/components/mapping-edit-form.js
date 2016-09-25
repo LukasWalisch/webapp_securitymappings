@@ -11,6 +11,7 @@ export default Ember.Component.extend({
   currentMapping: null,
 
   observeMappingChange: function changeMapping() {
+
     const currentMapping = this.get('currentMapping');
     if (currentMapping) {
       this.$('#tacticSelector').attr('disabled', true);
@@ -25,8 +26,8 @@ export default Ember.Component.extend({
 
       this.$('#patternSelector').attr('disabled', false);
       this.$('#patternSelector').val('Auswählen...');
-
     }
+
   }.observes('currentMapping'),
 
   store: Ember.inject.service(),

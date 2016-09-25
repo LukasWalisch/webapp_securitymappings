@@ -1,10 +1,16 @@
 {{#if isLogged}}
    <div id="editorContainer">
      <div id="mappingEditor">
-      {{#if formIsShown}}
+
+{{!--      use div instead of if helper, because div with display: none renders the component on init and if helper renders it when the property changes
+     in this case we need it on init because we have to change the values of the select elements in the dom. we have to do dom manipulation because
+     ember doesn't provide a solution like they do with input or textarea --}}
+      <div style={{formIsShown}}>
         {{mapping-edit-form currentUser=currentUser currentMapping=currentMapping callback=(action "hideEditForm")}}
-      {{/if}}
+      </div>
     </div>
+
+
     <div id="mappingList">
       <button style="width: 100%;" {{action "triggerNewMapping"}}>New Mapping</button><br><br>   
       {{#each mappingList as |mapping|}}
