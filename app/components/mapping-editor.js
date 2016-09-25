@@ -33,11 +33,11 @@ export default Ember.Component.extend({
   actions: {
 
     triggerNewMapping() {
-      debugger;
+      this.set('currentMapping', null);
     },
 
-    triggerEditMapping() {
-      this.set('currentMapping',"test");
+    triggerEditMapping(mapping) {
+      this.set('currentMapping', mapping);
     },
 
   },

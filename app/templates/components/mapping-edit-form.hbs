@@ -3,12 +3,12 @@
     <div class="form-group">
     {{!-- Headline --}}
 
-    <h2>{{headline}}</h2>
+    <h4>{{headline}}</h4>
   
     {{!-- selector --}}
 
     <label for="sel1">Tactic</label>
-    <select class="form-control" id="sel1" onchange={{action "clickOnTactic" value="target.value"}}>
+    <select class="form-control" id="tacticSelector" onchange={{action "clickOnTactic" value="target.value"}}>
         <option>Auswählen...</option>
       {{#each tactics as |tactic|}}
         <option>{{tactic.name}}</option>
@@ -16,7 +16,7 @@
     </select>
     <br>
     <label for="sel1">Pattern</label>
-    <select class="form-control" id="sel1" onchange={{action "clickOnPattern" value="target.value"}}>
+    <select class="form-control" id="patternSelector" onchange={{action "clickOnPattern" value="target.value"}}>
         <option>Auswählen...</option>
       {{#each patterns as |pattern|}}
         <option>{{pattern.name}}</option>

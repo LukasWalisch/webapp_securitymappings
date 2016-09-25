@@ -10,19 +10,45 @@ export default Ember.Component.extend({
   // Mapping that needs to be displayed
   currentMapping: null,
 
-
   observeMappingChange: function changeMapping() {
-    debugger;
-    console.log('i do');
-    return this.get('currentMapping');
+    const currentMapping = this.get('currentMapping');
+    if (currentMapping) {
+      this.$('#tacticSelector').attr('disabled', true);
+      this.$('#tacticSelector').val(currentMapping.get('tacticId.name'));
+
+      this.$('#patternSelector').attr('disabled', true);
+      this.$('#patternSelector').val(currentMapping.get('patternId.name'));
+
+    } else {
+      this.$('#tacticSelector').attr('disabled', false);
+      this.$('#tacticSelector').val('Auswählen...');
+
+      this.$('#patternSelector').attr('disabled', false);
+      this.$('#patternSelector').val('Auswählen...');
+
+    }
   }.observes('currentMapping'),
 
   store: Ember.inject.service(),
+
   tactics: null,
   patterns: null,
-  mappingInfo: null,
-  selectedTactic: null,
-  selectedPattern: null,
+
+  mappingInfo: Ember.computed('currentMapping', function _info() {
+    if (!this.get('currentMapping')) return null;
+    return this.get('currentMapping').get('info');
+  }),
+
+  selectedTactic: Ember.computed('currentMapping', function _seleTactics() {
+    if (!this.get('currentMapping')) return null;
+    return this.get('currentMapping').get('tacticId');
+  }),
+
+  selectedPattern: Ember.computed('currentMapping', function _selePatterns() {
+    if (!this.get('currentMapping')) return null;
+    return this.get('currentMapping').get('patternId');
+  }),
+
   headline: Ember.computed('selectedTactic', 'selectedPattern', function _headline() {
     const selectedTactic = this.get('selectedTactic');
     const selectedPattern = this.get('selectedPattern');
@@ -42,7 +68,6 @@ export default Ember.Component.extend({
   actions: {
 
     clickOnTactic(tacticName) {
-      debugger;
       if (tacticName === 'Auswählen...') {
         this.set('selectedTactic', null);
       } else {
