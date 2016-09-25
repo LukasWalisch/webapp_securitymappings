@@ -129,9 +129,16 @@ export default Ember.Component.extend({
       if (!this.get('mappingInfo')) {
         return this.toast.error('Keine Info vorhanden\nLöschen nicht möglich!', '', { closeButton: false, progressBar: false });
       }
-      this.get('currentMapping').destroyRecord();
+      return this.get('currentMapping').destroyRecord().then(() => {
+        this.toast.success('Das Mapping wurde gelöscht', '', { closeButton: false, progressBar: false });
+        if (this.get('callback')) return this.get('callback')();
+        return 0;
+      }).catch((err) => {
+        debugger;
+        this.toast.error('Löschen fehlgeschlagen. Grund: \n' + err, { closeButton: false, progressBar: false });
+        if (this.get('callback')) return this.get('callback')();
+        return 0;
+      });
     },
-
   },
-
 });
