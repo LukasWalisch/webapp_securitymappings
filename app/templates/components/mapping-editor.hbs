@@ -1,7 +1,7 @@
 {{#if isLogged}}
    <div id="editorContainer">
      <div id="mappingEditor">
-     {{mapping-edit-form currentUser=currentUser}}
+     {{mapping-edit-form currentUser=currentUser currentMapping=currentMapping}}
     </div>
     <div id="mappingList">
       <button style="width: 100%;" {{action "triggerNewMapping"}}>New Mapping</button><br><br>   

@@ -7,6 +7,16 @@ export default Ember.Component.extend({
   currentUser: null,
   callback: null,
 
+  // Mapping that needs to be displayed
+  currentMapping: null,
+
+
+  observeMappingChange: function changeMapping() {
+    debugger;
+    console.log('i do');
+    return this.get('currentMapping');
+  }.observes('currentMapping'),
+
   store: Ember.inject.service(),
   tactics: null,
   patterns: null,
@@ -32,6 +42,7 @@ export default Ember.Component.extend({
   actions: {
 
     clickOnTactic(tacticName) {
+      debugger;
       if (tacticName === 'Auswählen...') {
         this.set('selectedTactic', null);
       } else {
@@ -60,7 +71,6 @@ export default Ember.Component.extend({
     },
 
     clickButtonSave() {
-      debugger;
       if (!this.get('mappingInfo') || !this.get('selectedTactic') || !this.get('selectedPattern')) {
         return this.toast.error('Ungültige Eingaben\nSpeichern nicht möglich!', '', { closeButton: false, progressBar: false });
       }
@@ -76,8 +86,9 @@ export default Ember.Component.extend({
         this.toast.success('Das Mapping wurde gespeichert!', '', { closeButton: false, progressBar: false });
         if (this.get('callback')) return this.get('callback')();
         return 0;
-      }).catch(() => {
-        this.toast.error('Speichern fehlgeschlagen\nBitte versuchen Sie es erneut', '', { closeButton: false, progressBar: false });
+      }).catch((err) => {
+        this.toast.error('Speichern fehlgeschlagen. Grund: \n' + err.errors.msg, '', { closeButton: false, progressBar: false });
+        newPattern.rollbackAttributes();
         if (this.get('callback')) return this.get('callback')();
         return 0;
       });

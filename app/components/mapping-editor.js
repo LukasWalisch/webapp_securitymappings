@@ -5,8 +5,10 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   authManager: Ember.inject.service(),
   currentUser: null,
+  currentMapping: null,
   isLogged: false,
   mappingList: null,
+
 
   init() {
     this._super(...arguments);
@@ -35,7 +37,7 @@ export default Ember.Component.extend({
     },
 
     triggerEditMapping() {
-      debugger;
+      this.set('currentMapping',"test");
     },
 
   },
