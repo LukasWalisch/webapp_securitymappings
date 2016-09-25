@@ -1,2 +1,46 @@
-{{yield}}
-<h1>I am Here</h1>
+  <div id="mapping-edit-form-container">
+
+    <div class="form-group">
+    {{!-- Headline --}}
+
+    <h2>{{headline}}</h2>
+  
+    {{!-- selector --}}
+
+    <label for="sel1">Tactic</label>
+    <select class="form-control" id="sel1" onchange={{action "clickOnTactic" value="target.value"}}>
+        <option>Auswählen...</option>
+      {{#each tactics as |tactic|}}
+        <option>{{tactic.name}}</option>
+      {{/each}}
+    </select>
+    <br>
+    <label for="sel1">Pattern</label>
+    <select class="form-control" id="sel1" onchange={{action "clickOnPattern" value="target.value"}}>
+        <option>Auswählen...</option>
+      {{#each patterns as |pattern|}}
+        <option>{{pattern.name}}</option>
+      {{/each}}
+    </select>
+    <br>
+
+    {{!-- text box --}}
+
+      <label for="comment">Mapping Info:</label>
+      {{textarea value=mappingInfo rows="10" class="form-control"}}
+    </div>
+    <br>
+    <div style="float: right;">
+      <button class="btn btn-primary" {{action "clickButtonSave"}}>Speichern</button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>

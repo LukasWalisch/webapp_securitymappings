@@ -7,7 +7,7 @@ export default DS.RESTAdapter.extend({
 
   namespace: '',
   host: 'https://10.0.0.8:8443',
-  headers: Ember.computed(function() {
+  headers: Ember.computed(function _headers() {
     const user = this.get('currentUser').get('username');
     const token = this.get('currentUser').get('token');
     return {
@@ -17,11 +17,11 @@ export default DS.RESTAdapter.extend({
     };
   }),
 
-  //Override Method updateRecord
-  //Set the namespace befor promise
-  //Generate promise with the general implementation auf RESTAdapter.updateRecord()
-  //Resett the Namespace
-  //Return Promise
+  // Override Method updateRecord
+  // Set the namespace befor promise
+  // Generate promise with the general implementation auf RESTAdapter.updateRecord()
+  // Resett the Namespace
+  // Return Promise
   updateRecord(store, type, snapshot) {
     this.set('namespace', 'user');
     const promise = this._super(store, type, snapshot);
@@ -29,7 +29,15 @@ export default DS.RESTAdapter.extend({
     return promise;
   },
 
-  find: function(store, type, id) {
+  find(store, type, id) {
     return this._super(store, type, id);
   },
+
+  createRecord (store, type, snapshot) {
+    this.set('namespace', 'user');
+    const promise = this._super(store, type, snapshot);
+    this.set('namespace', '');
+    return promise;
+  },
+
 });

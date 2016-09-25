@@ -178,3 +178,7 @@ div.vis-network-tooltip.hide {
 .c-rating__item_disabled.is-active {
   background-position: -24px 0;
 }
+
+#mapping-edit-form-container {
+  margin: 2em;
+}
