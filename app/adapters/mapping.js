@@ -40,4 +40,11 @@ export default DS.RESTAdapter.extend({
     return promise;
   },
 
+  deleteRecord (store, type, snapshot) {
+    this.set('namespace', 'user');
+    const promise = this._super(store, type, snapshot);
+    this.set('namespace', '');
+    return promise;
+  },
+
 });

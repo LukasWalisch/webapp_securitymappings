@@ -11,22 +11,31 @@ export default Ember.Component.extend({
   currentMapping: null,
 
   observeMappingChange: function changeMapping() {
-    const currentMapping = this.get('currentMapping');
-    if (currentMapping) {
-      this.$('#tacticSelector').attr('disabled', true);
-      this.$('#tacticSelector').val(currentMapping.get('tacticId.name'));
 
-      this.$('#patternSelector').attr('disabled', true);
-      this.$('#patternSelector').val(currentMapping.get('patternId.name'));
+    Ember.run.schedule('afterRender', this, function afterRender() {
 
-    } else {
-      this.$('#tacticSelector').attr('disabled', false);
-      this.$('#tacticSelector').val('Auswählen...');
+      const currentMapping = this.get('currentMapping');
+      if (currentMapping) {
+        this.$('#tacticSelector').attr('disabled', true);
+        this.$('#tacticSelector').val(currentMapping.get('tacticId.name'));
 
-      this.$('#patternSelector').attr('disabled', false);
-      this.$('#patternSelector').val('Auswählen...');
+        this.$('#patternSelector').attr('disabled', true);
+        this.$('#patternSelector').val(currentMapping.get('patternId.name'));
 
-    }
+        this.$('#deleteMapping').attr('disabled', false);
+
+      } else {
+        this.$('#tacticSelector').attr('disabled', false);
+        this.$('#tacticSelector').val('Auswählen...');
+
+        this.$('#patternSelector').attr('disabled', false);
+        this.$('#patternSelector').val('Auswählen...');
+
+        this.$('#deleteMapping').attr('disabled', true);
+
+      }
+    });
+
   }.observes('currentMapping'),
 
   store: Ember.inject.service(),
@@ -117,6 +126,13 @@ export default Ember.Component.extend({
         if (this.get('callback')) return this.get('callback')();
         return 0;
       });
+    },
+
+    clickButtonDelete() {
+      if (!this.get('mappingInfo')) {
+        return this.toast.error('Keine Info vorhanden\nLöschen nicht möglich!', '', { closeButton: false, progressBar: false });
+      }
+      this.get('currentMapping').destroyRecord();
     },
 
   },
