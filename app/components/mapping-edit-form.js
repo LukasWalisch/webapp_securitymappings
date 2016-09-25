@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   currentUser: null,
   callback: null,
 
-  // Mapping that needs to be displayed
+  // Mapping that needs to be displayed, can be changed from the parent component
   currentMapping: null,
 
   observeMappingChange: function changeMapping() {
