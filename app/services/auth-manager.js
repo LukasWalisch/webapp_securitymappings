@@ -28,6 +28,8 @@ export default Ember.Service.extend({
       url: hostt + '/user/users/' + id,
     }).then((result) => {
       if (!result.user) {
+        //If the server responses with an error reset the local storage to keep it clean.
+        this.get('currentUser').reset();
         return callback(true, null);
       }
       return this.get('store').findRecord('user', result.user.id).then((result) => {

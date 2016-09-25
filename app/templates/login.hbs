@@ -1,8 +1,8 @@
 {{#if isLogged}}
 You are logged in alreay, switch to Rate/Navigation
 {{else}}
-<div style="display: flex; height: 100%;">
-    <div class="loginRegister">
+<div style="display: block; height: 100%;">
+    <div class="loginForm">
         <div class="form-group">
             <h2>Login</h2>
             <label for="exampleInputEmail1">Username</label>
@@ -13,11 +13,11 @@ You are logged in alreay, switch to Rate/Navigation
             {{input value=loginPassword placeholder='password' type='password'}}<br>
         </div>
         <button class="btn btn-default" {{action "authenticate"}}>Login</button>
-        <div class="errorSpace">
-            {{loginMsg}}
-        </div>
+        <br>
+        <br>
+        <a href="" {{action "toggleRegister"}}>Not registred? Registere here ASAP!</a>
     </div>
-    <div class="loginRegister">
+    <div class="registerForm">
         <div class="form-group">
             <h2>Register</h2>
             <label for="exampleInputEmail1">Username</label>
@@ -30,5 +30,4 @@ You are logged in alreay, switch to Rate/Navigation
         <button {{action 'register'}} class="btn btn-default">Register</button>
     </div>
 </div>
-
 {{/if}}

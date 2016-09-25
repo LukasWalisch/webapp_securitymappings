@@ -62,5 +62,15 @@ export default Ember.Controller.extend({
         }
       });
     },
+
+    toggleRegister() {
+      const element = document.getElementsByClassName('registerForm');
+      if (element[0].style.display === '') element[0].style.display = 'none';
+      if (element[0].style.display === 'none') {
+        element[0].style.display = 'block';
+      } else {
+        element[0].style.display = 'none';
+      }
+    },
   },
 });
