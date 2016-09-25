@@ -12,32 +12,26 @@ export default Ember.Component.extend({
 
   observeMappingChange: function changeMapping() {
 
-    Ember.run.schedule('afterRender', this, function afterRender() {
+    const currentMapping = this.get('currentMapping');
+    if (currentMapping) {
+      this.$('#tacticSelector').attr('disabled', true);
+      this.$('#tacticSelector').val(currentMapping.get('tacticId.name'));
 
-      const currentMapping = this.get('currentMapping');
-      if (currentMapping) {
-        this.$('#tacticSelector').attr('disabled', true);
-        this.$('#tacticSelector').val(currentMapping.get('tacticId.name'));
+      this.$('#patternSelector').attr('disabled', true);
+      this.$('#patternSelector').val(currentMapping.get('patternId.name'));
+
+      this.$('#deleteMapping').attr('disabled', false);
+
+    } else {
+      this.$('#tacticSelector').attr('disabled', false);
+      this.$('#tacticSelector').val('Auswählen...');
 
       this.$('#patternSelector').attr('disabled', false);
       this.$('#patternSelector').val('Auswählen...');
+
+      this.$('#deleteMapping').attr('disabled', true);
+
     }
-        this.$('#patternSelector').attr('disabled', true);
-        this.$('#patternSelector').val(currentMapping.get('patternId.name'));
-
-        this.$('#deleteMapping').attr('disabled', false);
-
-      } else {
-        this.$('#tacticSelector').attr('disabled', false);
-        this.$('#tacticSelector').val('Auswählen...');
-
-        this.$('#patternSelector').attr('disabled', false);
-        this.$('#patternSelector').val('Auswählen...');
-
-        this.$('#deleteMapping').attr('disabled', true);
-
-      }
-    });
 
   }.observes('currentMapping'),
 
