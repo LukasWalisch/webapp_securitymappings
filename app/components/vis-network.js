@@ -23,6 +23,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
+    
     // check if currently logged in
     const host = this.get('store').adapterFor('application').get('host');
     this.get('authManager').checkLogged(host, (err, currentUser) => {

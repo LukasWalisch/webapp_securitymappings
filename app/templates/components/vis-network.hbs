@@ -8,7 +8,7 @@
     Mappings:
     {{#each mappingsInfo as |mapping|}}
 
-      <li{{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+      <li class="li-clickable" {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
       {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.rating numbRating=mapping.ratingNumb }}
       <br>
 
