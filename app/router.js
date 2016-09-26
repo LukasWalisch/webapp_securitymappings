@@ -13,6 +13,7 @@ Router.map(function() {
   this.route('loggedIn');
   this.route('edit');
   this.route('notFound', { path: '/*wildcard' });
+  this.route('newPattern');
 });
 
 export default Router;

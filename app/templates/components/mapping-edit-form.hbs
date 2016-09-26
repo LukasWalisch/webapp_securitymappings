@@ -31,8 +31,12 @@
     </div>
     <br>
     <div style="float: right;">
-      <button id="saveMapping" class="btn btn-primary" {{action "clickButtonSave"}}>Speichern</button>
-      <button disabled="true" id="deleteMapping" class="btn btn-danger" {{action "clickButtonDelete"}}>Löschen</button>
+      {{#if isNewMappingMode}}
+        <button id="saveMapping" class="btn btn-primary" {{action "clickButtonSave"}}>Speichern</button>
+      {{else}}
+        <button id="saveMapping" class="btn btn-primary" {{action "clickButtonEditSave"}}>Speichern</button>
+      {{/if}}
+      <button disabled={{isNewMappingMode}} id="deleteMapping" class="btn btn-danger" {{action "clickButtonDelete"}}>Löschen</button>
     </div>
 
 

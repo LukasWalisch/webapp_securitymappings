@@ -7,6 +7,10 @@ export default Ember.Component.extend({
   currentUser: null,
   callback: null,
 
+
+  // True if a new Mapping is created, false if someone edits a Mapping;
+  isNewMappingMode: true,
+
   // Mapping that needs to be displayed, can be changed from the parent component
   currentMapping: null,
 
@@ -20,7 +24,9 @@ export default Ember.Component.extend({
       this.$('#patternSelector').attr('disabled', true);
       this.$('#patternSelector').val(currentMapping.get('patternId.name'));
 
-      this.$('#deleteMapping').attr('disabled', false);
+      this.set('isNewMappingMode', false);
+
+      // this.$('#deleteMapping').attr('disabled', false);
 
     } else {
       this.$('#tacticSelector').attr('disabled', false);
@@ -29,7 +35,9 @@ export default Ember.Component.extend({
       this.$('#patternSelector').attr('disabled', false);
       this.$('#patternSelector').val('Auswählen...');
 
-      this.$('#deleteMapping').attr('disabled', true);
+      this.set('isNewMappingMode', true);
+
+      // this.$('#deleteMapping').attr('disabled', true);
 
     }
 
@@ -125,10 +133,22 @@ export default Ember.Component.extend({
       });
     },
 
-    clickButtonDelete() {
-      if (!this.get('mappingInfo')) {
-        return this.toast.error('Keine Info vorhanden\nLöschen nicht möglich!', '', { closeButton: false, progressBar: false });
+    clickButtonEditSave() {
+      if (!this.get('mappingInfo') || !this.get('currentMapping')) {
+        return this.toast.error('Keine Info vorhanden\nEditieren nicht möglich!', '', { closeButton: false, progressBar: false });
       }
+      return this.get('currentMapping').save().then(() => {
+        this.toast.success('Das Mapping wurde gespeichert!', '', { closeButton: false, progressBar: false });
+        if (this.get('callback')) return this.get('callback')();
+        return 0;   
+      }).catch((err) => {
+        this.toast.error('Speichern fehlgeschlagen.\n' + err.errors.msg, '', { closeButton: false, progressBar: false });
+        if (this.get('callback')) return this.get('callback')();
+        return 0;
+      });
+    },
+
+    clickButtonDelete() {
       return this.get('currentMapping').destroyRecord().then(() => {
         this.toast.success('Das Mapping wurde gelöscht', '', { closeButton: false, progressBar: false });
         if (this.get('callback')) return this.get('callback')();

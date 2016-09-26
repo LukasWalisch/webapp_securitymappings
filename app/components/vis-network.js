@@ -18,6 +18,10 @@ export default Ember.Component.extend({
   isLogged: false,
   userCanRate: false,
 
+  // Shows the related patterns if they exist.
+  relatedPatterns: '',
+  relatedPatternsHeadline: '',
+
   /* ḿethods */
 
   init() {
@@ -39,7 +43,7 @@ export default Ember.Component.extend({
     // render the vis network
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
-      this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
+      //this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
 
   },
@@ -101,6 +105,22 @@ export default Ember.Component.extend({
     });
   },
 
+  // Sehr sehr unschön. Generates a String with all related patterns.
+  // Keine Möglichkeit gefunden <br> in den string einzubinden.
+  generateRelatedPatternsInfo(node) {
+    if (!node.relatedPatternIds) {
+      this.set('relatedPatternsHeadline', '');
+      return '';
+    }
+    let relatedPatternsString = '';
+    this.set('relatedPatternsHeadline', 'Related Patterns: ');
+    node.get('relatedPatternIds').forEach((item) => {
+      relatedPatternsString += (item.get('name') + ', ');
+    });
+
+    return relatedPatternsString.substring(0, relatedPatternsString.length - 2);
+  },
+
   focusNode(event) {
     const network = this.get('network');
     if (event.nodes.length > 0) {
@@ -122,6 +142,7 @@ export default Ember.Component.extend({
 
       setTimeout(() => {
         this.set('nodeInfo', node.get('info'));
+        this.set('relatedPatterns', this.generateRelatedPatternsInfo(node));
         this.set('mappingsInfo', node.get('mappingIds'));
         this.set('showOverview', true);
         this.showContent();
@@ -142,6 +163,8 @@ export default Ember.Component.extend({
     this.toggleTooltip(network);
 
     this.set('nodeInfo', null);
+    this.set('relatedPatterns', '');
+    this.set('relatedPatternsHeadline', '');
     this.set('mappingsInfo', null);
     this.set('showOverview', false);
   },

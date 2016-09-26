@@ -2,7 +2,7 @@
   <div class="visualization">
     <div id="visual-container">
     </div>
-    <div id="pattern-info">{{nodeInfo}}</div>
+    <div id="pattern-info">{{nodeInfo}}<br>{{relatedPatternsHeadline}}<br>{{relatedPatterns}}</div>
   </div>
   <div id="mapping">
     Mappings:
@@ -19,7 +19,6 @@
   {{#if showOverview}}
     <button {{action "zoomOverview"}}>Overview</button>
   {{/if}}
-
 </div>
 
 
