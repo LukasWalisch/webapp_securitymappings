@@ -174,6 +174,8 @@ export default Ember.Component.extend({
       if (!this.get('mappingInfo') || !this.get('currentMapping')) {
         return this.toast.error('Keine Info vorhanden\nEditieren nicht möglich!', '', { closeButton: false, progressBar: false });
       }
+      this.get('currentMapping').setProperties({ info: this.get('mappingInfo') });
+
       // .save() on an existing model calls the updateRecord() and not the createRecord()
       return this.get('currentMapping').save().then(() => {
         this.toast.success('Das Mapping wurde gespeichert!', '', { closeButton: false, progressBar: false });
