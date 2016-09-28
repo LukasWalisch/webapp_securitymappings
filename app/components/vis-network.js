@@ -43,6 +43,7 @@ export default Ember.Component.extend({
     // render the vis network
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
+      //this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
 
   },
@@ -58,13 +59,6 @@ export default Ember.Component.extend({
     const tactics = this.convertToArray(this.get('store').peekAll('tactic'));
     const mappings = this.convertToArray(this.get('store').peekAll('mapping'));
     const patterns = this.convertToArray(this.get('store').peekAll('pattern'));
-
-
-    // only the patterns that are already mapped, should be displayed
-/*    const patterns = mappings.map((item) => {
-      const pattern = item.get('patternId').getProperties('id', 'name');
-      return pattern;
-    });*/
 
     const dataSet = dataConverter.dataToDataset(tactics, patterns, mappings);
 
@@ -182,7 +176,7 @@ export default Ember.Component.extend({
    * @return {void}         [description]
    */
   toggleTooltip(network) {
-    if (network.getScale() >= 1) {
+    if (network.getScale() >= 0.98) {
       const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
       if (tooltip.className.indexOf(' hide') === -1) {
         tooltip.className += ' hide';

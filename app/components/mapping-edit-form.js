@@ -51,6 +51,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
 
 
+
   // ========== Computed Fields ========= //
 
   // All following properties changes when currentMapping changes.
@@ -154,6 +155,11 @@ export default Ember.Component.extend({
         if (this.get('callback')) return this.get('callback')();
         return 0;
       }).catch((err) => {
+        if (err.message) {
+          this.toast.error('Änderungen im local storage festgestellt', { closeButton: false, progressBar: false });
+          newMapping.rollbackAttributes();
+          return 0;
+        }
         this.toast.error('Speichern fehlgeschlagen. Grund: \n' + err.errors.msg, '', { closeButton: false, progressBar: false });
 
         // Rollbacks the set attribute to previous state to keep it clean.
@@ -174,6 +180,11 @@ export default Ember.Component.extend({
         if (this.get('callback')) return this.get('callback')();
         return 0;
       }).catch((err) => {
+        if (err.message) {
+          this.toast.error('Änderungen im local storage festgestellt', { closeButton: false, progressBar: false });
+          newMapping.rollBackAttributes();
+          return 0;
+        }
         this.toast.error('Speichern fehlgeschlagen.\n' + err.errors.msg, '', { closeButton: false, progressBar: false });
         if (this.get('callback')) return this.get('callback')();
         return 0;
@@ -187,6 +198,11 @@ export default Ember.Component.extend({
         if (this.get('callback')) return this.get('callback')();
         return 0;
       }).catch((err) => {
+        if (err.message) {
+          this.toast.error('Änderungen im local storage festgestellt', { closeButton: false, progressBar: false });
+          newMapping.rollBackAttributes();
+          return 0;
+        }
         this.toast.error('Löschen fehlgeschlagen. Grund: \n' + err, { closeButton: false, progressBar: false });
         if (this.get('callback')) return this.get('callback')();
         return 0;

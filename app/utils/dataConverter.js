@@ -25,7 +25,6 @@ const dataConverter = {
    */
 
   dataToDataset(tactics, patterns, mappings) {
-    debugger;
 
     const nodes = [];
     const edges = [];
@@ -34,7 +33,7 @@ const dataConverter = {
       nodes.push({
         id: tactic.id,
         label: tactic.name,
-        color: 'green',
+        color: 'coral',
         title: tactic.name,
       });
 
@@ -51,7 +50,7 @@ const dataConverter = {
     _.forEach(patterns, (pattern) => {
       nodes.push({ id: pattern.id,
         label: pattern.name,
-        color: 'red',
+        color: 'khaki',
         title: pattern.name,
       });
     });
