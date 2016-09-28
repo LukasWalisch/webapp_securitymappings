@@ -75,7 +75,7 @@ export default Ember.Component.extend({
         hierarchical: {
           enabled: true,
           sortMethod: 'directed',
-          nodeSpacing: 250,
+          nodeSpacing: 230,
         },
       },
       interaction: {
@@ -264,6 +264,7 @@ export default Ember.Component.extend({
 
         // persist the user rating and add rating to users rated mappings
         this.get('store').findRecord('mapping', mappingId).then((mapping) => {
+          debugger;
           this.get('store').findRecord('user', this.get('currentUser.id')).then((user) => {
             user.get('ratedMappings').addObject(mapping);
             user.save();
