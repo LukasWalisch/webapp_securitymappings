@@ -1,21 +1,29 @@
 body {
   margin: 0px;
+  font-family: 'Roboto', 'Noto', sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 10px;
 }
 
 #container {
-  max-width: 1000px;
-  margin: auto;
+/*  max-width: 1000px;
+  margin: auto;*/
+  background-color: #fafafa;
   height: 99.8vh;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
 }
 
-#header, #footer {
+/*#header, #footer {
   text-align: center;
-}
+}*/
 
 #footer {
-  background-color: lightgray;
   padding: 1em;
 }
 
@@ -31,6 +39,8 @@ body {
 }
 
 .mappings-content {
+  margin: 0px 16px;
+  background-color: #ffffff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 
               0 1px 5px 0 rgba(0, 0, 0, 0.12), 
               0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -39,14 +49,28 @@ body {
 }
 
 .visualization {
-  /*width: 100%;*/
-  /*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
+  position: relative;
   display: flex;
   flex-direction: row;
 }
 
+.visualization > div:first-child {
+  width: 100%;
+}
+
+.visualization > div:first-child button {
+  position: absolute;
+  margin-top: -43px;
+  margin-left: 10px;
+  opacity: 0.5;
+}
+
+.visualization > div:first-child button:hover {
+  opacity: 1;
+}
+
 .visualization #pattern-info {
-  width: 43%;
+  width: 500px;
   border-left: 1px solid #E5E5E5;
 }
 
@@ -54,8 +78,14 @@ body {
   border-top: 1px solid #E5E5E5;
 }
 
+.mapping-item {
+  padding: 8px 0px;
+}
+
 li.li-clickable {
-  cursor: pointer
+  cursor: pointer;
+  list-style: none;
+  font-size: 18px;
 }
 
 li.li-clickable:hover {
@@ -90,9 +120,9 @@ li.li-clickable:hover {
 }
 
 #pattern-info,
-.visualization #mapping {
+#mapping {
   visibility: hidden;
-  padding: 10px;
+  padding: 16px;
 }
 
 #visual-container {
@@ -147,6 +177,11 @@ div.vis-network-tooltip.hide {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.c-rating__info {
+  color: grey;
+  font-style: italic;
 }
 
 .c-rating__item {

@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 
   authManager: Ember.inject.service('authManager'),
 
-  username: 'Not logged in',
+  username: 'Nicht eingeloggt',
 
   isLogged: false,
 

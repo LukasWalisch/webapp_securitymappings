@@ -1,32 +1,33 @@
 <div class="mappings-content">
   <div class="visualization">
-    <div id="visual-container">
+    <div>
+      <div id="visual-container"></div>
+    {{#if showOverview}}
+      <button type="button" class="btn btn-default" {{action "zoomOverview"}}>Overview</button>
+    {{/if}}    
     </div>
     <!-- <br>{{relatedPatternsHeadline}}<br>{{relatedPatterns}}  -->
-    <div id="pattern-info">{{nodeInfo}}</div>
+    <div id="pattern-info">
+      <h1>Beschreibung:</h1>
+      {{nodeInfo}}
+    </div>
   </div>
   <div id="mapping">
-    Mappings:
+    <h1>{{if mappingsInfo "Mappings:" " "}}</h1>
     {{#each mappingsInfo as |mapping|}}
-
-      <li class="li-clickable" {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
-      {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.rating numbRating=mapping.ratingNumb }}
-      <br>
-
-    {{/each}}<br>
-    {{if mappingsInfo " " "No Mappings"}}
+      <div class="mapping-item">
+        <li class="li-clickable" {{action "doOpenModal" mapping}}>{{mapping.tacticId.name}} - {{mapping.patternId.name}}</li>
+        {{star-rating mayRate=false mappingId=mapping.id initialRating=mapping.rating numbRating=mapping.ratingNumb }}
+      </div>
+    {{/each}}
   </div>
-
-  {{#if showOverview}}
-    <button {{action "zoomOverview"}}>Overview</button>
-  {{/if}}
 </div>
 
 
  {{!-- info modal --}}
 
 {{#bs-modal open=openModal title=(string-concat currentMapping.tacticId.name currentMapping.patternId.name)}}
-  <h2>Mapping Info</h2>
+  <h2>Mapping Information</h2>
   <div>{{currentMapping.info}}</div>
    {{#if isLogged}}
     {{star-rating mayRate=userCanRate mappingId=currentMapping.id initialRating=currentMapping.rating numbRating=currentMapping.ratingNumb onClick=(action "receiveRating")}}

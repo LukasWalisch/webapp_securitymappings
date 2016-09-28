@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
   currentUser: storageFor('currentUser'),
 
-  username: 'Not logged in',
+  username: 'Nicht eingeloggt',
 
   logged: false,
 
