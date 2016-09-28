@@ -56,15 +56,17 @@ export default Ember.Component.extend({
     const container = document.getElementById('visual-container');
 
     const tactics = this.convertToArray(this.get('store').peekAll('tactic'));
-    const mappings = this.get('store').peekAll('mapping');
+    const mappings = this.convertToArray(this.get('store').peekAll('mapping'));
+    const patterns = this.convertToArray(this.get('store').peekAll('pattern'));
+
 
     // only the patterns that are already mapped, should be displayed
-    const patterns = mappings.map((item) => {
+/*    const patterns = mappings.map((item) => {
       const pattern = item.get('patternId').getProperties('id', 'name');
       return pattern;
-    });
+    });*/
 
-    const dataSet = dataConverter.dataToDataset(tactics, patterns, this.convertToArray(mappings));
+    const dataSet = dataConverter.dataToDataset(tactics, patterns, mappings);
 
     const options = {
       height: '400px',

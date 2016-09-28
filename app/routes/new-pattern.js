@@ -9,7 +9,7 @@ export default Ember.Route.extend({
   // If someone changed the name in local storage and enters the page, he is logged of.
   actions: {
     didTransition() {
-      if (!(this.get('currentUser').get('username') === 'admin')) this.transitionTo('mappings');
+      if (!(this.get('currentUser').get('username') === 'lukas')) this.transitionTo('mappings');
       return true;
     },
   },
