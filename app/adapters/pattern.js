@@ -3,8 +3,11 @@ import { storageFor } from 'ember-local-storage';
 
 export default DS.RESTAdapter.extend({
 
+  // Retrieves current User from local store
   currentUser: storageFor('currentUser'),
 
+
+  // Default Namespace for GET Requests on host.
   namespace: '',
   host: 'https://10.0.0.4:8443',
   headers: Ember.computed(function() {
@@ -17,6 +20,7 @@ export default DS.RESTAdapter.extend({
     };
   }),
 
+  // Switches Namespace to /user for registered calls.
   createRecord (store, type, snapshot) {
     this.set('namespace', 'user/admin');
     const promise = this._super(store, type, snapshot);
@@ -24,10 +28,12 @@ export default DS.RESTAdapter.extend({
     return promise;
   },
 
-  find: function(store, type, id) {
+  // For testing. if deleted, Ember calls application adapter for Method.
+  find (store, type, id) {
     return this._super(store, type, id);
   },
 
+  // Switches Namespace and sends an delete to host.
   deleteRecord (store, type, snapshot) {
     this.set('namespace', 'user/admin');
     const promise = this._super(store, type, snapshot);

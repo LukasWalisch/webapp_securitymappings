@@ -11,7 +11,7 @@
     <select class="form-control" id="tacticSelector" onchange={{action "clickOnTactic" value="target.value"}}>
         <option>Auswählen...</option>
       {{#each tactics as |tactic|}}
-        <option>{{tactic.name}}</option>
+          <option>{{tactic.name}}</option>
       {{/each}}
     </select>
     <br>

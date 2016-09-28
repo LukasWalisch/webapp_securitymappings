@@ -1,10 +1,12 @@
 import DS from 'ember-data';
 import { storageFor } from 'ember-local-storage';
 
-export default DS.RESTAdapter.extend({
+ default DS.RESTAdapter.extend({
 
+  // Retrieves current User from local store
   currentUser: storageFor('currentUser'),
 
+  // All calls go to /user urls.
   namespace: 'user',
   host: 'https://10.0.0.4:8443',
   headers: Ember.computed(function() {

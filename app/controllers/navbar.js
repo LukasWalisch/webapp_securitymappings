@@ -3,6 +3,8 @@ import { storageFor } from 'ember-local-storage';
 
 export default Ember.Controller.extend({
 
+  // ========= Properties ========= //
+
   login: Ember.inject.controller(),
 
   currentUser: storageFor('currentUser'),
@@ -13,7 +15,11 @@ export default Ember.Controller.extend({
 
   isLogged: false,
 
+  // ========== Methods/Actions ======== //
+
   actions: {
+
+    // Resets all logged in relevant Data.
     logoff() {
       this.get('currentUser').reset();
       this.set('isLogged', false);
@@ -35,13 +41,10 @@ export default Ember.Controller.extend({
         this.set('username', this.get('currentUser').get('username'));
       }
     });
-
-    Ember.run.schedule('afterRender', this, function afterRender() {
-      //this.set('username', this.get('currentUser').get('username'));
-    });
   },
 
-  //Called if someone logged in or logged out
+  // Called if someone logged in or logged out.
+  // triggerLogged can be true (if loggedIn) or false (if not logged in).
   updateBar(triggerLogged) {
     this.set('username', this.get('currentUser').get('username'));
     this.set('isLogged', triggerLogged);

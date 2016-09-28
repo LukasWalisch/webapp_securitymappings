@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
 
+  // ========= Very messy controller. Can only be accessed by admin ======== //
+  // =========  Confusing by default to fuck with possible Attackes ======== //
+
   patternList: null,
 
 

@@ -1,3 +1,5 @@
+// ========== NOT USED ANYMORE, DELETE SOON ========== //
+
 import Ember from 'ember';
 import { storageFor } from 'ember-local-storage';
 

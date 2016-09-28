@@ -57,10 +57,33 @@ export default Ember.Component.extend({
     const container = document.getElementById('visual-container');
 
     const tactics = this.convertToArray(this.get('store').peekAll('tactic'));
-    const patterns = this.convertToArray(this.get('store').peekAll('pattern'));
-    const mappings = this.convertToArray(this.get('store').peekAll('mapping'));
+    // let patterns = this.get('store').peekAll('pattern');
+    const mappings = this.get('store').peekAll('mapping');
 
-    const dataSet = dataConverter.dataToDataset(tactics, patterns, mappings);
+    let patterns = [];
+
+
+    patterns = mappings.map((item) => {
+      const pattern = item.get('patternId').getProperties('id', 'name');
+      return pattern;
+    });
+
+
+    /*
+    let filteredPatterns = patterns.map((item) => {
+      if (item.get('mappingIds.length') > 0) {
+        return item;
+      }
+      return undefined;
+    });
+
+    filteredPatterns = filteredPatterns.filter((n) => {
+      return n != undefined;
+    });
+
+    */
+
+    const dataSet = dataConverter.dataToDataset(tactics, patterns, this.convertToArray(mappings));
 
     const options = {
       height: '400px',
