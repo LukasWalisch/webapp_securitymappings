@@ -10,7 +10,6 @@ export default Ember.Service.extend({
   host: null,
 
   checkLogged(host, callback) {
-
     const hostt = this.get('store').adapterFor('application').get('host');
     let id = this.get('currentUser').get('id');
     const token = this.get('currentUser').get('token');
@@ -35,6 +34,25 @@ export default Ember.Service.extend({
       return this.get('store').findRecord('user', result.user.id).then((result) => {
         callback(null, result);
       });
+    });
+  },
+
+  checkAdmin(callback) {
+    const host = this.get('store').adapterFor('application').get('host');
+    const token = this.get('currentUser').get('token');
+    const username = this.get('currentUser').get('username');
+
+    return Ember.$.ajax({
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-key': username,
+        'x-access-token': token,
+      },
+      url: host + '/user/admin/admin',
+    }).then((result) => {
+      if (result.errors) return callback(result.errors.msg);
+      return callback();
     });
   },
 

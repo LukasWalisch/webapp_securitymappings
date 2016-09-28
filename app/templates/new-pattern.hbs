@@ -4,18 +4,20 @@
           <label for="exampleInputEmail1">Name</label>
           {{input value=patternName}}<br>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="margin: auto;">
           <label for="exampleInputPassword1">Info</label>
           {{textarea value=patternInfo rows="10" class="form-control"}}
       </div>
       <button class="btn btn-default" {{action "create"}}>Create</button>
       <br>
       <br>
-      <div class="form-group">
-      Click to delete  
-      {{#each patternList as |pattern|}}
-        <li class="li-clickable" {{action "delete" pattern}}>{{pattern.name}}</li>
-      {{/each}}
+      <div style="text-align: left;">
+      <h4>Click to delete</h4>
+      <ul>  
+        {{#each patternList as |pattern|}}
+          <li class="li-clickable" {{action "delete" pattern}}>{{pattern.name}}</li>
+        {{/each}}
+      </ul>
     </div>
 </div>
 

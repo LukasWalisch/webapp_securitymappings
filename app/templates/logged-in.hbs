@@ -1,0 +1,18 @@
+{{#if isLogged}}
+   <div id="editorContainer">
+     <div id="mappingEditor">
+      container 1
+    </div>
+    <div id="mappingList">
+    <ul style="list-style-type: none; padding: 0">
+          <button style="width: 100%;" {{action "triggerNewMapping"}}>New Mapping</button><br><br>
+        {{#each-in mappings as |key mapping|}}
+          <a href="" {{action "triggerEditMapping"}}>{{mapping}}</a><br>
+        {{/each-in}}
+    </ul>
+    </div>
+
+  </div>
+{{else}}
+You are not logged in, please Login first
+{{/if}}

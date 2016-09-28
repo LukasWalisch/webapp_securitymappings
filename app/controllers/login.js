@@ -25,6 +25,7 @@ export default Ember.Controller.extend({
 
   // Calls super init() from Ember.Controller Class
   init() {
+
     this._super(...arguments);
 
     this.set('host', this.store.adapterFor('application').get('host'));
@@ -56,7 +57,7 @@ export default Ember.Controller.extend({
       // Calls authManager and waits for response via promise.
       this.get('authManager').authenticate(login, password, this.host, (err) => {
         if (err) {
-          this.set('loginMsg', err);
+          this.toast.error(err, '', { closeButton: false, progressBar: false });
         } else {
           this.transitionToRoute('mappings');
 

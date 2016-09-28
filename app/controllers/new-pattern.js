@@ -8,12 +8,20 @@ export default Ember.Controller.extend({
 
   patternList: null,
 
+  authManager: Ember.inject.service('authManager'),
+
 
   init() {
     this._super(...arguments);
 
     const patterns = this.get('store').peekAll('pattern');
     this.set('patternList', patterns);
+    this.get('authManager').checkAdmin((err) => {
+        if (err) {
+          this.toast.error(err, '', { closeButton: false, progressBar: false });
+          this.transitionToRoute('mappings');
+        }
+    });
   },
 
 
@@ -31,7 +39,7 @@ export default Ember.Controller.extend({
 
       newPattern.save().then(() => {
         this.transitionToRoute('mappings');
-      }).catch((err) => {
+      }).catch(() => {
         this.transitionToRoute('mappings');
       });
     },

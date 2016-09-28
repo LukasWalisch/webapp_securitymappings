@@ -147,7 +147,7 @@ export default Ember.Component.extend({
         rating: 0,
         ratingNumb: 0,
       });
-
+      this.set('currentMapping', null);
       // Saves the Mapping and returns the callback.
       return newMapping.save().then(() => {
         this.toast.success('Das Mapping wurde gespeichert!', '', { closeButton: false, progressBar: false });
