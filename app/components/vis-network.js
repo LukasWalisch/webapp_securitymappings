@@ -158,9 +158,8 @@ export default Ember.Component.extend({
     network.fit({
       animation: { duration: 500 },
     });
-
+    setTimeout(() => this.toggleTooltip(network), 550);
     network.unselectAll();
-    this.toggleTooltip(network);
 
     this.set('nodeInfo', null);
     this.set('relatedPatterns', '');
@@ -176,7 +175,7 @@ export default Ember.Component.extend({
    * @return {void}         [description]
    */
   toggleTooltip(network) {
-    if (network.getScale() >= 0.98) {
+    if (network.getScale() >= 0.9) {
       const tooltip = document.getElementsByClassName('vis-network-tooltip')[0];
       if (tooltip.className.indexOf(' hide') === -1) {
         tooltip.className += ' hide';
@@ -269,7 +268,6 @@ export default Ember.Component.extend({
             user.get('ratedMappings').addObject(mapping);
             user.save();
           });
-          mapping.set('rating', mapping.get('rating') + userRating);
           mapping.save();
           this.toast.success('Ihr Rating wurde gespeichert', '', { closeButton: false, progressBar: false });
         });

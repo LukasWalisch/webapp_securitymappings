@@ -19,6 +19,9 @@ export default Ember.Component.extend({
   }),
 
   avgRating: Ember.computed('numbRating', 'initialRating', function _avgRating() {
+    if (this.get('numbRating') === 0) {
+      return 0;
+    }
     return this.get('initialRating') / this.get('numbRating');
   }),
 
@@ -38,6 +41,7 @@ export default Ember.Component.extend({
 
   actions: {
     starClicked(rating) {
+      debugger;
       // send back id and rating to parent component
       if (this.get('onClick')) {
         this.get('onClick')(this.get('mappingId'), rating, this.get('mayRate'));
@@ -45,6 +49,7 @@ export default Ember.Component.extend({
 
       // if enabled, state is recalculated
       if (this.get('mayRate')) {
+        debugger;
         this.set('numbRating', this.get('numbRating') + 1);
         this.set('initialRating', this.get('initialRating') + rating);
         this.set('mayRate', false);
