@@ -43,7 +43,6 @@ export default Ember.Component.extend({
     // render the vis network
     Ember.run.schedule('afterRender', this, function afterRender() {
       this.renderNetwork();
-      //this.toast.error('testToast!', '', { closeButton: false, progressBar: false });
     });
 
   },
@@ -57,31 +56,13 @@ export default Ember.Component.extend({
     const container = document.getElementById('visual-container');
 
     const tactics = this.convertToArray(this.get('store').peekAll('tactic'));
-    // let patterns = this.get('store').peekAll('pattern');
     const mappings = this.get('store').peekAll('mapping');
 
-    let patterns = [];
-
-
-    patterns = mappings.map((item) => {
+    // only the patterns that are already mapped, should be displayed
+    const patterns = mappings.map((item) => {
       const pattern = item.get('patternId').getProperties('id', 'name');
       return pattern;
     });
-
-
-    /*
-    let filteredPatterns = patterns.map((item) => {
-      if (item.get('mappingIds.length') > 0) {
-        return item;
-      }
-      return undefined;
-    });
-
-    filteredPatterns = filteredPatterns.filter((n) => {
-      return n != undefined;
-    });
-
-    */
 
     const dataSet = dataConverter.dataToDataset(tactics, patterns, this.convertToArray(mappings));
 
