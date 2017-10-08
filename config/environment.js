@@ -6,6 +6,9 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+
+    // change this value to the server ip where the backend application is running
+    backend: '127.0.0.1',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

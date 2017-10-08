@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import { storageFor } from 'ember-local-storage';
+import config from '../../config/environment';
 
 
 // Adapter for network Requests for the mapping Model
@@ -10,7 +11,7 @@ export default DS.RESTAdapter.extend({
 
   // All calls go to root url of host
   namespace: '',
-  host: 'https://10.0.0.8:8443',
+  host: 'https://' + config.backend + ':8443',
 
   // Headers for the validation on the restserver. retrieved from the local storage
   // x-key is the username and x-access-token the generated token from the server

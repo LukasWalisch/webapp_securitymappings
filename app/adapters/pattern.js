@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import { storageFor } from 'ember-local-storage';
+import config from '../../config/environment';
 
 export default DS.RESTAdapter.extend({
 
@@ -9,7 +10,7 @@ export default DS.RESTAdapter.extend({
 
   // Default Namespace for GET Requests on host.
   namespace: '',
-  host: 'https://10.0.0.8:8443',
+  host: 'https://' + config.backend + ':8443',
   headers: Ember.computed(function() {
     const user = this.get('currentUser').get('username');
     const token = this.get('currentUser').get('token');
