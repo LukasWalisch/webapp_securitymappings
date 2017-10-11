@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import { storageFor } from 'ember-local-storage';
-import config from '../../config/environment';
+import config from '../config/environment';
 
 
 // Adapter for network Requests for the mapping Model
