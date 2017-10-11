@@ -1,53 +1,62 @@
-# Webapp-securitymappings
+# Frontend for the security mappings web application
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+For the installation of the matching backend, refer to https://github.com/Tayi22/Bachelor_Backend_Linux
 
-## Prerequisites
+## Recommended installation for Ubuntu 16.04:
 
-You will need the following things properly installed on your computer.
+Install the standard nodejs version:
+```
+sudo apt-get install nodejs
+sudo apt-get install npm
+```
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+Install version 6.3 of Node with the n version manager 
+_Note: Any other version of nodejs may works just fine too but this is the version from the time of development_
+```
+sudo npm install -g n
+n 6.3
+```
 
-## Installation
+Check the version of node:
+```
+node -v
+```
+this should now return "v6.3.1"
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
+Install the bower package manager:
+```
+sudo npm install -g bower
+```
+Install ember-cli:
+```
+sudo npm install -g ember-cli
+```
+Install git:
+```
+sudo apt-get install git
+```
+Download the repository:
+```
+mkdir securitymappings-frontend
+cd securitymappings-frontend
+git clone https://github.com/LukasWalisch/webapp_securitymappings.git .
+```
+Install project dependencies:
+```
+npm install
+bower install
+```
 
-## Running / Development
+## Configuration:
+It is important to tell this application the ip adress of the server where the backend application is running. Therefore a configuration file must be edited:
+```
+nano config/environment.js
+```
+change the ip adress in the line that states `backend: '127.0.0.1'` accordingly.
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+## Start the frontend web application:
+```
+ember s
+```
+navigate in browser to: https://<serverip>:4200
 
